@@ -1,0 +1,21 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-size: 50px
+}
+
+	.sample {
+		display: block;
+		height: 1em;
+		width: 1em;
+		border: 1px solid grey;
+		transition: background-color .3s;
+	}
+	.input {
+		display: block;
+		height: 1em
+	}
+		.input:before {
+			content: "#";
+		}

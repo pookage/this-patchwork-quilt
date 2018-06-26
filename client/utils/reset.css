@@ -1,0 +1,17 @@
+
+/* GENERICS
+///////////////////////////// */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+}
+
+/* FORM ELEMENTS 
+////////////////////////////// */
+input {
+	appearance: none;
+	font-size: 1em
+}
