@@ -81,7 +81,7 @@ export default class ColourPicker extends Component {
 		const pickerId = label ? label.replace(/\s+/g, "-").toLowerCase() : "";
 
 		return(
-			<figroup
+			<fieldset
 				className={s.wrapper} 
 				{...remainingProps}>
 				{label && (
@@ -105,7 +105,7 @@ export default class ColourPicker extends Component {
 						ref={(ref) => this.$input = ref}
 					/>
 				</div>
-			</figroup>
+			</fieldset>
 		);
 	}//render
 }
