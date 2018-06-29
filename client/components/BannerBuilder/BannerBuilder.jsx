@@ -7,61 +7,89 @@ export default class BannerBuilder extends Component {
 	constructor(...args){
 		super(...args);
 
-		this.state = {};
+		this.saveColour   = this.saveColour.bind(this);
+		this.renderPicker = this.renderPicker.bind(this);
+
+		this.state = {
+			colours: {
+				base: {
+					colour: "FFF",
+					defaultColor: "FFF",
+					name: "",
+					type: "base"
+				},
+				highlight: {
+					colour: "DDD",
+					defaultColor: "DDD",
+					name: "",
+					type: "highlight"
+				}
+			}
+		};
 	}//constructor
 
-	renderUsedColours(props, state, context){
-
-		/*
-			NOTE : so, we're getting these values from the context. now we just need to figure out how to change them
-		*/
+	saveColour(data){
 
 		const {
+			colour,
+			type
+		} = data;
+
+		const colours        = { ...this.state.colours };
+		colours[type].colour = colour;
+		this.setState({
 			colours
-		} = context;
+		});
+	}//saveColour
+
+	//RENDER METHODS
+	//-----------------------------
+	renderPicker(data){
+		const {} = this.props;
+		const {} = this.state;
+		const {
+			colour,
+			defaultColor,
+			name,
+			type,
+		} = data;
 
 		return(
-			<footer>
-				Colours used :
-				<ol>
-					<li>
-						{colours.primary}
-					</li>
-					<li>
-						{colours.highlight}
-					</li>
-					<li>
-						{colours.accent}
-					</li>
-				</ol>
-			</footer>
-		);	
-	}//renderUsedColours
-	render(props = this.props, state = this.state){
+			<ColourPicker 
+				colour={colour}
+				default={defaultColor}
+				name={name}
+				label={type}
+				key={`${type}_${name}`}
+			/>
+		);
+	}//renderPicker
+	render(){
 
 		const {
 			...remainingProps
-		} = props;
+		} = this.props;
+
+		const {
+			colours = {}
+		} = this.state;
 
 		return(
 			<article>
 				<h1>
 					Banner Builder
 				</h1>
-				<form>
-					<ColourPicker label="Base Colour" />
-					<ColourPicker label="Highlight Colour" />
-					<ColourPicker label="AccentColour" />
-					<output>
-						<canvas 
-							ref={(ref) => this.$canvas = ref} 
-							{...remainingProps}
-						/>
-					</output>
-					<BannerContext.Consumer>
-						{this.renderUsedColours.bind(true, props, state)}
-					</BannerContext.Consumer>
-				</form>
+				<BannerContext.Provider value={{ saveColour: this.saveColour }}>
+					<form>
+						{Object.values(colours).map(this.renderPicker)}
+						<output>
+							<canvas 
+								ref={(ref) => this.$canvas = ref} 
+								{...remainingProps}
+							/>
+						</output>
+					</form>
+				</BannerContext.Provider>
 			</article>
 		);
 	}//render

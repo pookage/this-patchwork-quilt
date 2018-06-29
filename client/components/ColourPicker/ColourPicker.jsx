@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BannerContext } from "Contexts/banner-colours.js";
 import s from "Components/ColourPicker/ColourPicker.css";
 
 export default class ColourPicker extends Component {
@@ -10,24 +11,12 @@ export default class ColourPicker extends Component {
 
 		//scope binding
 		this.updateColour = this.updateColour.bind(this);
-
-		//state initialisation
-		this.defaultState = {
-			colour: "FFF" // (string) default colour value to apply to the picker
-		};
-		this.state = { ...this.defaultState };
 	}//constructor
-	componentDidMount(){
-		this.$input.addEventListener("keyup", this.updateColour);
-	}//componentDidMount
-	componentWillUnmount(){
-		this.$input.removeEventListener("keyup", this.updateColour);
-	}//componentWillUnmount
 
 
 	//EVENT HANDLING
 	//--------------------------------
-	updateColour(event){
+	updateColour(saveColour, event){
 
 		const {
 			key: keyPressed = "", // (string) the last letter that was pressed
@@ -48,9 +37,17 @@ export default class ColourPicker extends Component {
 			//only update the colour if it's a valid colour length
 			const validLength = colour.length % 3 == 0;
 			if(validLength){
-				const newColour = colour || this.defaultState.colour;
-				this.setState({
-					colour: newColour
+
+				const {
+					default: defaultColour,
+					label
+				} = this.props;
+
+
+				const newColour = colour || defaultColour;
+				saveColour({
+					colour: newColour,
+					type: label
 				});
 			}
 		} 
@@ -69,43 +66,49 @@ export default class ColourPicker extends Component {
 	render(props = this.props, state = this.state){
 
 		const {
-			label = "", // (string) to apply to the picker's <label> element, also used to generate an ID for the <label> element
+			colour = "",
+			default: defaultColour = "",
+			name   = "",
+			label  = "", // (string) to apply to the picker's <label> element, also used to generate an ID for the <label> element
 			...remainingProps
 		} = props;
 
-		const {
-			colour = "FFF" // (string) hexadecimal colour code to apply to the sample output
-		} = state;
-
 		//use the label to create an all lowercase and hyphenated id
-		const pickerId = label ? label.replace(/\s+/g, "-").toLowerCase() : "";
+		const type = label ? label.replace(/\s+/g, "-").toLowerCase() : "";
 
 		return(
-			<fieldset
-				className={s.wrapper} 
-				{...remainingProps}>
-				{label && (
-					<legend>
-						<label htmlFor={pickerId}>
-							{label}
-						</label>
-					</legend>
-				)}
-				<div className={s.container}>
-					<output 
-						className={s.sample}
-						style={{backgroundColor: `#${colour}`}}
-					/>
-					<input
-						id={pickerId}
-						className={s.input}
-						type="text" 
-						placeholder="FFF"
-						maxLength="6"
-						ref={(ref) => this.$input = ref}
-					/>
-				</div>
-			</fieldset>
+			<BannerContext.Consumer>
+				{({saveColour}) => {
+					return(
+						<fieldset
+							className={s.wrapper} 
+							{...remainingProps}>
+							{label && (
+								<legend>
+									<label htmlFor={type}>
+										{label}
+									</label>
+								</legend>
+							)}
+							<div className={s.container}>
+								<output 
+									className={s.sample}
+									style={{backgroundColor: `#${colour}`}}
+								/>
+								<input
+									id={type}
+									className={s.input}
+									type="text" 
+									placeholder={defaultColour}
+									maxLength="6"
+									ref={(ref) => this.$input = ref}
+									onKeyUp={this.updateColour.bind(true, saveColour)}
+								/>
+							</div>
+						</fieldset>
+					);
+				}}
+			</BannerContext.Consumer>
 		);
 	}//render
 }
