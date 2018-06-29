@@ -28,6 +28,7 @@ export default class BannerBuilder extends Component {
 
 		const colours        = { ...this.state.colours };
 		colours[type].colour = colour;
+		colours[type].name   = name;
 		this.setState({
 			colours
 		});
@@ -37,9 +38,7 @@ export default class BannerBuilder extends Component {
 	//-----------------------------
 	render(){
 
-		const {
-			...remainingProps // (array) of every prop we haven't used
-		} = this.props;
+		const {} = this.props;
 
 		const {
 			colours = {} // (object) containing all of the currently selected colours
@@ -59,10 +58,7 @@ export default class BannerBuilder extends Component {
 					<BannerContext.Provider value={context}>
 						<ColourCatalogue />
 						<output>
-							<canvas 
-								ref={(ref) => this.$canvas = ref} 
-								{...remainingProps}
-							/>
+							<canvas ref={(ref) => this.$canvas = ref} />
 						</output>
 					</BannerContext.Provider>
 				</form>

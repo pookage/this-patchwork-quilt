@@ -35,7 +35,7 @@ export default class ColourTextInput extends Component {
 		if(keyPressed && isAlphanumeric && validHexDigit){
 
 			//only update the colour if it's a valid colour length
-			const validLength = colour.length % 3 == 0;
+			const validLength = colour.length % 6 == 0;
 			if(validLength){
 
 				const {
@@ -45,12 +45,11 @@ export default class ColourTextInput extends Component {
 
 				//if we have a valid colour - that's the new one; otherwise use the default
 				const newColour = colour || defaultColour;
-				const name      = newColour; // we'll come up with a fancy way to name this later
 
 				//update the Provider!
 				saveColour({
 					colour: newColour,
-					name,
+					name: newColour,
 					type: label
 				});
 			}
@@ -58,6 +57,7 @@ export default class ColourTextInput extends Component {
 
 		//...otherwise get sanitising...
 		else {
+			console.log("sanitising!")
 			let newValue       = colour.slice(0, -1);         //remove their last keypress
 			newValue           = newValue.replace(/\W/g, ""); //remove all non-alphanumeric characters
 			event.target.value = newValue;                    //and replace input's value with new safe input
@@ -71,7 +71,8 @@ export default class ColourTextInput extends Component {
 		const {
 			default: defaultColour = "", // (string) hexcode for the colour to revert to when the input is empty
 			label                  = "", // (string)[base, highlight, accent] which role the colour fulfills
-			id                     = ""  // (string) a converted version of the label safe to be used as an ID (used by label to point at input)
+			id                     = "",  // (string) a converted version of the label safe to be used as an ID (used by label to point at input)
+			colour
 		} = this.props;
 
 		return(

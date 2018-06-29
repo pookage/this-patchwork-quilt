@@ -21,8 +21,7 @@ export default class ColourPicker extends Component {
 
 		return(
 			<fieldset
-				className={s.wrapper} 
-				{...remainingProps}>
+				className={s.wrapper}>
 				<legend>
 					<label htmlFor={type}>
 						{`${label} : ${name}`}
@@ -37,6 +36,7 @@ export default class ColourPicker extends Component {
 						id={type}
 						label={label}
 						default={defaultColour}
+						colour={colour}
 					/>
 				</div>
 			</fieldset>

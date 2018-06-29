@@ -31,7 +31,7 @@ export default class ColourCatalogue extends Component {
 				default={defaultColor}
 				name={name}
 				label={type}
-				key={`${type}_${name}`}
+				key={`${type}`}
 			/>
 		);
 	}//renderColourPicker
