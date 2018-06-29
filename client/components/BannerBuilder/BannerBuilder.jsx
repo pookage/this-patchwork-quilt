@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BannerContext, defaultColourSelection } from "Contexts/banner-colours.js";
+import { BannerContext, colourOptions, defaultColourSelection } from "Contexts/banner-colours.js";
 import ColourCatalogue from "Components/ColourCatalogue/ColourCatalogue.jsx";
 
 
@@ -46,6 +46,7 @@ export default class BannerBuilder extends Component {
 
 		const context = {
 			colours,                    // (object) containing details about each currently selected colour
+			colourOptions,              // (object) containing all the available colours to choose from
 			saveColour: this.saveColour // (function) callback used to update the Provider's internal colour storage
 		};
 

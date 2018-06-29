@@ -16,11 +16,17 @@ export default class ColourTextInput extends Component {
 
 	//EVENT HANDLING
 	//--------------------------------
-	updateColour(saveColour, event){
+	updateColour(context, event){
 
 		const {
-			key: keyPressed = "", // (string) the last letter that was pressed
-			target,               // (HTMLElement) the input element triggering the event
+			colourOptions = {},      // (object) containing all of the available colour options
+			saveColour    = () => {} // (function) callback used to update the BannerContext.Provider's internal colour storage
+		} = context;
+
+		const {
+			key: keyPressed = "",    // (string) the last letter that was pressed
+			ctrlKey         = false, // (boolan) whether or not the ctrl key is currently being pressed
+			target,                  // (HTMLElement) the input element triggering the event
 		} = event;
 
 		const {
@@ -45,19 +51,20 @@ export default class ColourTextInput extends Component {
 
 				//if we have a valid colour - that's the new one; otherwise use the default
 				const newColour = colour || defaultColour;
+				const newName   = colourOptions[newColour] ? colourOptions[newColour].name : newColour;	
+
 
 				//update the Provider!
 				saveColour({
 					colour: newColour,
-					name: newColour,
+					name: newName,
 					type: label
 				});
 			}
 		} 
 
 		//...otherwise get sanitising...
-		else {
-			console.log("sanitising!")
+		else if(!ctrlKey){
 			let newValue       = colour.slice(0, -1);         //remove their last keypress
 			newValue           = newValue.replace(/\W/g, ""); //remove all non-alphanumeric characters
 			event.target.value = newValue;                    //and replace input's value with new safe input
@@ -71,17 +78,12 @@ export default class ColourTextInput extends Component {
 		const {
 			default: defaultColour = "", // (string) hexcode for the colour to revert to when the input is empty
 			label                  = "", // (string)[base, highlight, accent] which role the colour fulfills
-			id                     = "",  // (string) a converted version of the label safe to be used as an ID (used by label to point at input)
-			colour
+			id                     = ""  // (string) a converted version of the label safe to be used as an ID (used by label to point at input)
 		} = this.props;
 
 		return(
 			<BannerContext.Consumer>
 				{(context) => {
-
-					const {
-						saveColour = () => {} // (function) callback used to update the BannerContext.Provider's internal colour storage
-					} = context;
 
 					return(
 						<input
@@ -90,7 +92,7 @@ export default class ColourTextInput extends Component {
 							type="text" 
 							placeholder={defaultColour}
 							maxLength="6"
-							onKeyUp={this.updateColour.bind(true, saveColour)}
+							onKeyUp={this.updateColour.bind(true, context)}
 						/>
 					);
 				}}
