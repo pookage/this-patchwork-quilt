@@ -25,7 +25,7 @@ export default class ColourPicker extends Component {
 				{...remainingProps}>
 				<legend>
 					<label htmlFor={type}>
-						{label}
+						{`${label} : ${name}`}
 					</label>
 				</legend>
 				<div className={s.container}>
@@ -34,7 +34,7 @@ export default class ColourPicker extends Component {
 						style={{backgroundColor: `#${colour}`}}
 					/>
 					<ColourTextInput 
-						type={type}
+						id={type}
 						label={label}
 						default={defaultColour}
 					/>

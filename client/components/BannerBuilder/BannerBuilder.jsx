@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BannerContext } from "Contexts/banner-colours.js";
+import { BannerContext, defaultColourSelection } from "Contexts/banner-colours.js";
 import ColourCatalogue from "Components/ColourCatalogue/ColourCatalogue.jsx";
 
 
@@ -8,23 +8,12 @@ export default class BannerBuilder extends Component {
 	constructor(...args){
 		super(...args);
 
-		this.saveColour    = this.saveColour.bind(this);
+		//scope binding
+		this.saveColour = this.saveColour.bind(this);
 
+		//state initialisation
 		this.state = {
-			colours: {
-				base: {
-					colour: "FFF",
-					defaultColor: "FFF",
-					name: "",
-					type: "base"
-				},
-				highlight: {
-					colour: "DDD",
-					defaultColor: "DDD",
-					name: "",
-					type: "highlight"
-				}
-			}
+			colours: defaultColourSelection
 		};
 
 	}//constructor

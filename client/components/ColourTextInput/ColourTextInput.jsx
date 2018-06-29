@@ -69,9 +69,9 @@ export default class ColourTextInput extends Component {
 	render(){
 
 		const {
-			type,
-			default: defaultColour,
-			label
+			default: defaultColour = "", // (string) hexcode for the colour to revert to when the input is empty
+			label                  = "", // (string)[base, highlight, accent] which role the colour fulfills
+			id                     = ""  // (string) a converted version of the label safe to be used as an ID (used by label to point at input)
 		} = this.props;
 
 		return(
@@ -84,7 +84,7 @@ export default class ColourTextInput extends Component {
 
 					return(
 						<input
-							id={type}
+							id={id}
 							className={s.input}
 							type="text" 
 							placeholder={defaultColour}
