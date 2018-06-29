@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BannerContext } from "Contexts/banner-colours.js";
-import ColourPicker from "Components/ColourPicker/ColourPicker.jsx";
+import ColourCatalogue from "Components/ColourCatalogue/ColourCatalogue.jsx";
+
 
 export default class BannerBuilder extends Component {
 	
@@ -8,8 +9,6 @@ export default class BannerBuilder extends Component {
 		super(...args);
 
 		this.saveColour    = this.saveColour.bind(this);
-		this.renderPickers = this.renderPickers.bind(this);
-		this.renderPicker  = this.renderPicker.bind(this);
 
 		this.state = {
 			colours: {
@@ -33,8 +32,9 @@ export default class BannerBuilder extends Component {
 	saveColour(data){
 
 		const {
-			colour,
-			type
+			colour = "", // (string) hexcode for the colour to save
+			name   = "", // (string) unique name for what the colour represents
+			type   = ""  // (string)[base, highlight, accent] which role that the colour fulfills
 		} = data;
 
 		const colours        = { ...this.state.colours };
@@ -46,45 +46,19 @@ export default class BannerBuilder extends Component {
 
 	//RENDER METHODS
 	//-----------------------------
-	renderPicker(data){
-		const {
-			colour,
-			defaultColor,
-			name,
-			type,
-		} = data;
-
-		return(
-			<ColourPicker 
-				colour={colour}
-				default={defaultColor}
-				name={name}
-				label={type}
-				key={`${type}_${name}`}
-			/>
-		);
-	}//renderPicker
-	renderPickers(data){
-
-		const {
-			colours = {}
-		} = data;
-
-		return Object.values(colours).map(this.renderPicker)
-	}//renderPickers
 	render(){
 
 		const {
-			...remainingProps
+			...remainingProps // (array) of every prop we haven't used
 		} = this.props;
 
 		const {
-			colours = {}
+			colours = {} // (object) containing all of the currently selected colours
 		} = this.state;
 
 		const context = {
-			colours,
-			saveColour: this.saveColour
+			colours,                    // (object) containing details about each currently selected colour
+			saveColour: this.saveColour // (function) callback used to update the Provider's internal colour storage
 		};
 
 		return(
@@ -92,19 +66,17 @@ export default class BannerBuilder extends Component {
 				<h1>
 					Banner Builder
 				</h1>
-				<BannerContext.Provider value={context}>
-					<form>
-						<BannerContext.Consumer>
-							{this.renderPickers}
-						</BannerContext.Consumer>
+				<form>
+					<BannerContext.Provider value={context}>
+						<ColourCatalogue />
 						<output>
 							<canvas 
 								ref={(ref) => this.$canvas = ref} 
 								{...remainingProps}
 							/>
 						</output>
-					</form>
-				</BannerContext.Provider>
+					</BannerContext.Provider>
+				</form>
 			</article>
 		);
 	}//render

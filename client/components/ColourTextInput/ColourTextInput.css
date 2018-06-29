@@ -1,0 +1,7 @@
+.input {
+	display: block;
+	height: 1em
+}
+	.input:before {
+		content: "#";
+	}
