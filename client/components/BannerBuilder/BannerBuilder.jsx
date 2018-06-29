@@ -7,8 +7,9 @@ export default class BannerBuilder extends Component {
 	constructor(...args){
 		super(...args);
 
-		this.saveColour   = this.saveColour.bind(this);
-		this.renderPicker = this.renderPicker.bind(this);
+		this.saveColour    = this.saveColour.bind(this);
+		this.renderPickers = this.renderPickers.bind(this);
+		this.renderPicker  = this.renderPicker.bind(this);
 
 		this.state = {
 			colours: {
@@ -26,6 +27,7 @@ export default class BannerBuilder extends Component {
 				}
 			}
 		};
+
 	}//constructor
 
 	saveColour(data){
@@ -45,8 +47,6 @@ export default class BannerBuilder extends Component {
 	//RENDER METHODS
 	//-----------------------------
 	renderPicker(data){
-		const {} = this.props;
-		const {} = this.state;
 		const {
 			colour,
 			defaultColor,
@@ -64,6 +64,14 @@ export default class BannerBuilder extends Component {
 			/>
 		);
 	}//renderPicker
+	renderPickers(data){
+
+		const {
+			colours = {}
+		} = data;
+
+		return Object.values(colours).map(this.renderPicker)
+	}//renderPickers
 	render(){
 
 		const {
@@ -74,14 +82,21 @@ export default class BannerBuilder extends Component {
 			colours = {}
 		} = this.state;
 
+		const context = {
+			colours,
+			saveColour: this.saveColour
+		};
+
 		return(
 			<article>
 				<h1>
 					Banner Builder
 				</h1>
-				<BannerContext.Provider value={{ saveColour: this.saveColour }}>
+				<BannerContext.Provider value={context}>
 					<form>
-						{Object.values(colours).map(this.renderPicker)}
+						<BannerContext.Consumer>
+							{this.renderPickers}
+						</BannerContext.Consumer>
 						<output>
 							<canvas 
 								ref={(ref) => this.$canvas = ref} 
