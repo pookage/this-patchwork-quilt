@@ -24,6 +24,7 @@ export default class BannerCanvas extends Component {
 		this.drawColours(this.colours);
 	}//componentDidMount
 	componentDidUpdate(){
+
 		this.drawColours(this.colours);
 	}//componentDidUpdate
 
@@ -41,14 +42,25 @@ export default class BannerCanvas extends Component {
 		const canvas  = this.$canvas;
 		const context = canvas.getContext("2d");
 
+		//grab height and width from CSS rather than inline
 		const {
-			height,
-			width
-		} = canvas;
+			height: heightPX,
+			width: widthPX
+		} = getComputedStyle(canvas);
+
+		const height = parseInt(heightPX);
+		const width  = parseInt(widthPX);
+
+		//because it apparently freaks out unless it has an inline style too
+		canvas.height = height;
+		canvas.width  = width;
+
 
 		const stripeWidth = width / 3;
 		const half        = width / 2;
 		const cutout      = height / 1.618;
+
+		console.log(width, stripeWidth);
 
 		//clear for clean canvas
 		context.clearRect(0, 0, width, height);
@@ -93,8 +105,6 @@ export default class BannerCanvas extends Component {
 					return(
 						<canvas
 							className={s.canvas}
-							width="300"
-							height="600"
 							ref={(ref) => this.$canvas = ref} 
 						/>
 					);

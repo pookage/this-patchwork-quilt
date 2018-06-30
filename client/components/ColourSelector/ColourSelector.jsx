@@ -32,15 +32,11 @@ export default class ColourSelector extends Component {
 			value: selectedColour = "" // (HTMLElement) the select elemnt that has been changed
 		} = event.target;
 
-		const {
-			name,
-			colour: newColour
-		} = colourOptions[selectedColour];
+		const newColour = colourOptions[selectedColour];
 	
 		//update the Provider!
 		saveColour({
-			colour: newColour,
-			name: name,
+			...newColour,
 			type: label
 		});
 

@@ -3,23 +3,33 @@ import React, { createContext } from "react";
 export const colourOptions = {
 	"F0F0F0": {
 		colour: "F0F0F0",
-		name: "Endless Winter"
+		name: "Endless Winter",
+		mantra: "this endless winter"
 	},
 	"8A0707": {
 		colour: "8A0707",
-		name: "Blood of Our Fallen"
+		name: "Blood of Our Fallen",
+		mantra: "the blood of our fallen"
 	},
 	"03104F": {
 		colour: "03104F",
-		name: "Stormy Sea"
+		name: "Stormy Sea",
+		mantra: "this stormy sea"
 	}, 
 	"EAD94E": {
 		colour: "EAD94E",
-		name: "Wheat Harvest"
+		name: "Wheat Harvest",
+		mantra: "the bountiful harvest"
 	},
 	"228B22": {
 		colour: "228B22",
-		name: "Ancient Forest"
+		name: "Ancient Forest",
+		mantra: "the ancient forest"
+	}, 
+	"ed6471": {
+		colour: "ed6471",
+		name: "Slapped Cheeks",
+		mantra: "these slapped cheeks"
 	}
 };
 

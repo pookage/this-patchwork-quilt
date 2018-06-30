@@ -37,7 +37,8 @@ module.exports = {
 		alias: {
 			Components: path.resolve(__dirname, "client/components/"),
 			Utils: path.resolve(__dirname, "client/utils/"),
-			Contexts: path.resolve(__dirname, "client/contexts/")
+			Contexts: path.resolve(__dirname, "client/contexts/"),
+			Assets: path.resolve(__dirname, "client/assets/")
 		}
 	}
 }

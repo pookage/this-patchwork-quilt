@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import ColourTextInput from "Components/ColourTextInput/ColourTextInput.jsx";
-import ColourSelector from "Components/ColourSelector/ColourSelector.jsx";
+import ColourTextInput from "Components/ColourTextInput/ColourTextInput.jsx"; // input version #1
+import ColourSelector from "Components/ColourSelector/ColourSelector.jsx";    // input version #2
+import ColourWheel from "Components/ColourWheel/ColourWheel.jsx";             // input version #3
 import s from "Components/ColourPicker/ColourPicker.css";
 
 export default class ColourPicker extends Component {
@@ -18,34 +19,24 @@ export default class ColourPicker extends Component {
 		} = props;
 
 		//use the label to create an all lowercase and hyphenated id
-		const type = label ? label.replace(/\s+/g, "-").toLowerCase() : "";
+		const type       = label ? label.replace(/\s+/g, "-").toLowerCase() : "";
+
+		//it's the same for all of the different inputs, so let's just enforce that by declaring here.
+		const inputProps = { 
+			id: type, 
+			default: defaultColour,
+			label
+		};
 
 		return(
 			<fieldset
 				className={s.wrapper}>
-				<legend>
-					<label htmlFor={type}>
-						{`${label} : ${name}`}
-					</label>
-				</legend>
 				<div className={s.container}>
 					<output 
 						className={s.sample}
 						style={{backgroundColor: `#${colour}`}}
 					/>
-					{debug ? (
-						<ColourTextInput 
-							id={type}
-							label={label}
-							default={defaultColour}
-						/>
-					) : (
-						<ColourSelector 
-							id={type}
-							label={label}
-							default={defaultColour}
-						/>
-					)}
+					<ColourWheel { ...inputProps } />
 				</div>
 			</fieldset>
 		);
