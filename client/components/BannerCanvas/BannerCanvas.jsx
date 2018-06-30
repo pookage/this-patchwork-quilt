@@ -14,11 +14,11 @@ export default class BannerCanvas extends Component {
 		//scope binding
 		this.drawColours = this.drawColours.bind(this);
 
-		//non-rendering variables
+		//local reference for BannerContext.Provider's colours state so that the canvas API can access it
 		this.colours = {
-			base: {},
+			base:      {},
 			highlight: {},
-			accent: {}
+			accent:    {}
 		};
 	}//constructor
 	componentDidMount(){
@@ -85,7 +85,6 @@ export default class BannerCanvas extends Component {
 		//draw accent colour
 		context.fillStyle = `#${accent.colour}`;
 		context.fillRect(stripeWidth * 2, 0, stripeWidth, height)
-
 	}//drawColours
 
 
@@ -94,30 +93,22 @@ export default class BannerCanvas extends Component {
 	render(){
 		return(
 			<UIContext.Consumer>
-				{UI => {
-					const {
-						overlayVisible = false // (boolean) whether or not an overlay has been opened somewhere
-					} = UI;
-					return(
-						<BannerContext.Consumer>
-							{context => {
+				{UI => (
+					<BannerContext.Consumer>
+						{Banner => {
 
-								const {
-									colours = {}
-								} = context;
+							//make the BannerContext.Provider state accessible outside the render function
+							this.colours = Banner.colours;
 
-								this.colours = colours;
-
-								return(
-									<canvas
-										className={`${s.canvas} ${overlayVisible ? common.blur : ""}`}
-										ref={(ref) => this.$canvas = ref} 
-									/>
-								);
-							}}
-						</BannerContext.Consumer>
-					);
-				}}
+							return(
+								<canvas
+									className={`${s.canvas} ${UI.overlayVisible ? common.blur : ""}`}
+									ref={(ref) => this.$canvas = ref} 
+								/>
+							);
+						}}
+					</BannerContext.Consumer>
+				)}
 			</UIContext.Consumer>
 		);
 	}//render

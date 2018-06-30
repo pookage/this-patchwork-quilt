@@ -44,16 +44,14 @@ export default class ClanBuilder extends Component {
 	//-----------------------------
 	render(){
 
-		const {} = this.props;
-
 		const {
-			colours        = {}      // (object) containing all of the currently selected colours
+			colours = {} // (object) containing all of the currently selected colours
 		} = this.state;
 
 		const context = {
-			colours,                          // (object) containing details about each currently selected colour
-			colourOptions,                    // (object) containing all the available colours to choose from
-			saveColour: this.saveColour,      // (function) callback used to update the Provider's internal colour storage
+			colours,                    // (object) containing details about each currently selected colour
+			colourOptions,              // (object) containing all the available colours to choose from
+			saveColour: this.saveColour // (function) callback used to update the Provider's internal colour storage
 		};
 
 		return(
@@ -61,26 +59,21 @@ export default class ClanBuilder extends Component {
 				<form className={s.form}>
 					<BannerContext.Provider value={context}>
 						<UIContext.Consumer>
-							{UI => {
-								const {
-									overlayVisible = false // (boolean) whether or not an overlay has been opened somewhere
-								} = UI;
-								return(
-									<header className={`${s.summary} ${overlayVisible ? common.blur : ""}`}>
-										<h1 className={s.name}>
-											<span className={s.prefix}>
-												House
-											</span>
-											<input
-												className={s.input} 
-												type="text" 
-												placeholder="Lancaster" 
-											/>
-										</h1>
-										<Mantra />
-									</header>
-								);
-							}}
+							{UI => (
+								<header className={`${s.summary} ${UI.overlayVisible ? common.blur : ""}`}>
+									<h1 className={s.name}>
+										<span className={s.prefix}>
+											House
+										</span>
+										<input
+											className={s.input} 
+											type="text" 
+											placeholder="Lancaster" 
+										/>
+									</h1>
+									<Mantra />
+								</header>
+							)}
 						</UIContext.Consumer>
 						<div className={s.banner}>
 							<ColourCatalogue />

@@ -30,23 +30,18 @@ export default class ColourCatalogue extends Component {
 				colour={colour}
 				default={defaultColor}
 				name={name}
-				label={type}
+				type={type}
 				key={`${type}`}
 			/>
 		);
 	}//renderColourPicker
 	render(){
-
 		return(
 			<BannerContext.Consumer>
-				{(context) => {
-
-					const {
-						colours = {} // (object) containing the currently selected colours
-					} = context;
+				{(Banner) => {
 
 					//render out a colour picker for each of the colour roles
-					const colourPickers = Object.values(colours).map(this.renderColourPicker);
+					const colourPickers = Object.values(Banner.colours).map(this.renderColourPicker);
 
 					return(
 						<div className={s.wrapper}>
@@ -55,8 +50,7 @@ export default class ColourCatalogue extends Component {
 					);
 				}}
 			</BannerContext.Consumer>
-		)
-
+		);
 	}
 
 }

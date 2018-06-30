@@ -14,44 +14,41 @@ export default class App extends Component {
 		//scope binding
 		this.toggleOverlay = this.toggleOverlay.bind(this);
 
+		//state initialisation
 		this.state = {
-			overlayVisible: false
+			overlayVisible: false // (boolean) whether or not an overlay has been enabled somewhere
 		};
 	}//constructor
 
 
 	//EVENT HANDLING
 	//------------------------------
-	toggleOverlay(visible, event){
-
-		console.log(visible, event);
-
-		if(event && event.preventDefault) event.preventDefault();
-		const nextOverlayVisible = visible !== undefined ? visible : !this.state.overlayVisible;
+	toggleOverlay(overlayVisible, event){
+		event.preventDefault();
 		this.setState({
-			overlayVisible: nextOverlayVisible
+			overlayVisible
 		});	
 	}//toggleOverlay
+
 
 	//RENDER METHODS
 	//------------------------------
 	render() {
 
 		const {
-			overlayVisible
+			overlayVisible = false // (boolean) whether or not an overlay has been enabled somewhere
 		} = this.state;
 
-		const context = {
+		// package together a state to give to the UIContext.Provider
+		const UI = {
 			overlayVisible,
 			toggleOverlay: this.toggleOverlay
 		};
 
 		return (
-        	<div>
-        		<UIContext.Provider value={context}>
-	        		<ClanBuilder />
-	        	</UIContext.Provider>
-        	</div>
+        	<UIContext.Provider value={UI}>
+        		<ClanBuilder />
+        	</UIContext.Provider>
 		);
 	}//render
 }

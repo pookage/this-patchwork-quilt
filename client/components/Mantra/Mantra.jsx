@@ -7,17 +7,13 @@ export default class Mantra extends Component {
 	render(){
 		return(
 			<BannerContext.Consumer>
-				{context => {
-
-					const {
-						colours = {}
-					} = context;
+				{Banner => {
 
 					const {
 						base,
 						highlight,
 						accent
-					} = colours;
+					} = Banner.colours;
 
 					return(
 						<p className={s.wrapper}>
