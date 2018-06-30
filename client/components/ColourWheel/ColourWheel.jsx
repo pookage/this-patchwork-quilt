@@ -13,19 +13,73 @@ export default class ColourWheel extends Component {
 		//scope binding
 		this.renderColour      = this.renderColour.bind(this);
 		this.layoutColours     = this.layoutColours.bind(this);
+		this.updateColour      = this.updateColour.bind(this);
+		this.updatePreview     = this.updatePreview.bind(this);
+		this.reset             = this.reset.bind(this);
 
 		this.colourData = [];    // (array) containing all of the colours from the BannerContext.Provider
-		this.visible    = false; // (boolean) containing whether or not we 
+
+		this.defaultState = {
+			preview: "" // (string) hexcode of the description for the currently active colour
+		}
+		this.state = { ...this.defaultState };
 	}//constructor
 	componentDidMount(){
 		const windowReadyCheck = setInterval(() => {
 			if(window.innerHeight){
 				clearInterval(windowReadyCheck);
 				this.layoutColours(this.colourData);
-				console.log("still intervalling")
 			}
 		}, 500);
 	}//componentDidUpdate
+
+
+	//EVENT HANDLING
+	//---------------------------------
+	reset(toggleVisiblity, event){
+		event.preventDefault();
+		toggleVisiblity(event);
+		this.setState({ ...this.defaultState });
+	}//reset
+	updatePreview(event){
+		const {
+			value
+		} = event.target;
+
+		this.setState({
+			preview: value
+		});
+	}//updatePreview
+	updateColour(pickerContext, bannerContext, event){
+
+		const {
+			label
+		} = this.props;
+
+		const {
+			colourOptions = {},
+			saveColour    = () => {}
+		} = bannerContext;
+
+		const {
+			toggleVisiblity = () => {}
+		} = pickerContext;
+
+		const {
+			value: selectedColour = "" // (HTMLElement) the select elemnt that has been changed
+		} = event.target;
+
+		const newColour = colourOptions[selectedColour];
+	
+		//update the Provider!
+		saveColour({
+			...newColour,
+			type: label
+		});
+
+		//close the wheel
+		toggleVisiblity();
+	}//updateColour
 
 
 	//UTILS
@@ -58,10 +112,10 @@ export default class ColourWheel extends Component {
 
 			const colourDiameter    = parseInt(colourWidth);
 			const distanceFromEdge  = colourDiameter + parseInt(colourMargin);
-			const colourSpacing     = colourDiameter * 0.25;
+			const colourSpacing     = colourDiameter * 0.10;
 			const wheelCircumfrence = (Math.PI * 2) * (wheelRadius - distanceFromEdge);
 			const share             = 360 * ((colourDiameter + colourSpacing) / wheelCircumfrence);
-			const rotation          = startRotation + (index * share);
+			const rotation          = (startRotation + (index * share) + (share / 2));
 			const transformStyle    = `rotate(${rotation}deg)`;
 
 			element.style.transform = transformStyle;
@@ -71,7 +125,7 @@ export default class ColourWheel extends Component {
 
 	//RENDER METHODS
 	//---------------------------------
-	renderColour(colourCount, data, index){
+	renderColour(colourCount, pickerContext, bannerContext, data, index){
 
 		const {
 			colour,
@@ -84,21 +138,39 @@ export default class ColourWheel extends Component {
 		const share    = 360 / colourCount;
 		const rotation = share * index; 
 
+		const selected = this.props.default == colour;
+
+
+
 		return(
 			<div 
 				className={s.colourWrapper}
 				key={key}
 				ref={(ref) => this[refKey] = ref}
 				style={{transform: `rotate(${rotation}deg)`}}>
-				<div 
-					className={s.colour}
+				<input 
+					type="radio" 
+					className={`${s.colour} ${selected ? s.selected : ""}`}
 					ref={(ref) => this[`${refKey}_colour`] = ref}
 					style={{ backgroundColor: `#${colour}`}}
+					onClick={this.updateColour.bind(true, pickerContext, bannerContext)}
+					onMouseOver={this.updatePreview}
+					value={colour}
 				/>
 			</div>
 		);
 	}//renderColour
 	render(){
+
+		const {
+			id    = "",
+			label = "",
+			default: defaultOption = ""
+		} = this.props;
+
+		const {
+			preview = ""
+		} = this.state;
 
 		return(
 
@@ -119,21 +191,37 @@ export default class ColourWheel extends Component {
 								} = bannerContext;
 
 								const colourData = this.colourData = Object.values(colourOptions);
-								const colours    = colourData.map(this.renderColour.bind(true, colourData.length));
+								const colours    = colourData.map(this.renderColour.bind(true, colourData.length, pickerContext, bannerContext));
+								
+								const {
+									name        = "",
+									description = ""
+								} = colourOptions[preview || defaultOption];
 
 								return(
 									<div className={`${s.wrapper} ${visible ? s.visible : s.hidden}`}>
+
 										<div 
 											className={s.wheel}
 											ref={(ref) => this.$wheel = ref}>
-											<div className={s.colours}>
-												{colours}
+											<div className={s.info}>
+												<h1 className={s.name}>
+													{name}
+												</h1>
+												<p className={s.description}>
+													{description}
+												</p>
 											</div>
-											<button
-												className={s.closeButton} 
-												onClick={toggleVisiblity}>
-												Close
-											</button>
+											<div className={s.spinner}>
+												<div className={s.colours}>
+													{colours}
+												</div>
+												<button
+													className={s.closeButton} 
+													onClick={this.reset.bind(true, toggleVisiblity)}>
+													Close
+												</button>
+											</div>
 										</div>
 									</div>
 								);

@@ -6,6 +6,7 @@
 	height: 1em;
 	width: 1em;
 	z-index: 3;
+	--gemSize: 50px;
 }
 	.visible {
 		transition: transform 1s;
@@ -27,81 +28,132 @@
 		background-color: #efefef;
 		border-radius: 200%;
 	}
-		.wheel:after {
-			content: "";
-			display: block;
-			height: 103%;
-			width: 103%;
-			position: absolute;
-			top: -1.5%;
-			left: -1.5%;
-			border-radius: 100%;
-			border: 2px solid #999;
-		}
-	.hidden .wheel {
-		transform: rotate(90deg);
-		transition: transform .6s;
-	}
-	.visible .wheel {
-		transform: rotate(0deg);
-		transition: transform 1s .6s;
-	}
-
-		/* CLOSE BUTTON 
-		////////////////////////////*/
-		.closeButton {
+		/* COLOUR INFO
+		///////////////////////////*/
+		.info {
 			position: absolute;
 			top: 50%;
-			left: 100%;
-			margin: 1em auto auto 1em;
-			padding: 1em;
+			left: 50%;
+			font-size: 1.618rem;
+			height: calc(40% - (2 * var(--gemSize)));
+			width: calc(40% - (2 * var(--gemSize)));
+			border-radius: 100%;
 			z-index: 2;
+			padding: 2em;
 		}
-			.closeButton:hover {
-				cursor: pointer;
+			.name {
+				font-family: "Ruritana";
+				font-size: 2.618em;
+			}
+			.description {
+				font-size: 1em;
+				margin-top: 1em;
 			}
 
-		/* COLOURS */
-		.colours {
+		/* SPINNING COLOUR WHEEL 
+		///////////////////////////*/
+		.spinner {
 			position: absolute;
 			top: 0;
 			left: 0;
 			height: 100%;
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: flex-start;
 		}
-			.colourWrapper {
+			.spinner:after {
+				content: "";
+				display: block;
+				height: 103%;
+				width: 103%;
 				position: absolute;
-				height: 50%;
-				font-size: 50px;
-				width: 1em;
-				transform-origin: center bottom;
-				transition: transform .3s;
+				top: -1.5%;
+				left: -1.5%;
+				border-radius: 100%;
+				border: 2px solid #999;
+				z-index: 1;
 			}
-				.colour {
-					top: 0.25em;
-					left: 0;
-					height: 2em;
-					width: 2em;
-					position: absolute;
-					border-radius: 100%;
-					border: 0.1em solid rgba(255,255,255,0.1);
-					overflow: hidden;
-					box-shadow: 0 0.25em 0.2em rgba(0,0,0,0.1);
+		.hidden .spinner {
+			transform: rotate(90deg);
+			transition: transform .6s;
+		}
+		.visible .spinner {
+			transform: rotate(0deg);
+			transition: transform 1s .6s;
+		}
+
+			/* CLOSE BUTTON 
+			////////////////////////////*/
+			.closeButton {
+				position: absolute;
+				top: 50%;
+				left: 100%;
+				margin: 1em auto auto 1em;
+				padding: 1em;
+				z-index: 2;
+			}
+				.closeButton:hover {
+					cursor: pointer;
 				}
-					.colour:after {
-						content: "";
-						display: block;
-						font-size: 0.5em;
-						height: 70%;
-						width:  70%;
+
+			/* COLOURS 
+			/////////////////////////////*/
+			.colours {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: flex-start;
+				z-index: 3;
+			}
+				.colourWrapper {
+					position: absolute;
+					height: 50%;
+					font-size: var(--gemSize);
+					width: 2em;
+					transform-origin: center bottom;
+					transition: transform .3s;
+				}
+					.colour {
+						height: 2em;
+						width: 2em;
+						overflow: hidden;
 						position: absolute;
-						top: 50%;
-						left: 50%;
-						transform: translateX(-50%) translateY(-50%);
-						background-image: url("/client/assets/images/hexagonal.svg");
-						background-size: 100% 100%;
-						opacity: 0.1;
+						top: 0.25em;
+						left: 0;
+						border-radius: 100%;
+						border: 0.1em solid rgba(255,255,255,0.1);
+						box-shadow: 0 0.125em 0.1em rgba(0,0,0,0.1);
+						transform: scale(0.9);
+						-webkit-appearance: none;
+						-moz-appearance: none;
+						appearance: none;
+						transition: transform .3s, box-shadow .3s;
+
 					}
+					.colour.selected,
+					.colour:hover {
+						transform: scale(1);
+						box-shadow: 0 0.25em 0.3em rgba(0,0,0,0.1);
+					}
+						.colour:hover {
+							cursor: pointer;
+						}
+						/* CUT GEM */
+						.colour:after {
+							content: "";
+							display: block;
+							font-size: 0.5em;
+							height: 70%;
+							width:  70%;
+							position: absolute;
+							top: 50%;
+							left: 50%;
+							transform: translateX(-50%) translateY(-50%);
+							background-image: url("/client/assets/images/hexagonal.svg");
+							background-size: 100% 100%;
+							opacity: 0.1;
+							transition: opacity .3s;
+						}
+						
