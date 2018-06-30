@@ -17,7 +17,7 @@ export default class ColourPicker extends Component {
 
 		//state initialisation
 		this.state = {
-			visible: false
+			visible: true // (boolean) whether or not to display the colour wheel for the picker
 		};
 	}//constructor
 
@@ -45,7 +45,7 @@ export default class ColourPicker extends Component {
 		} = this.props;
 
 		const {
-			visible = false
+			visible = false // (boolean) whether or not to display the colour wheel for the picker
 		} = this.state;
 
 		//use the label to create an all lowercase and hyphenated id

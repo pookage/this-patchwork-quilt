@@ -22,7 +22,7 @@ export default class Mantra extends Component {
 					return(
 						<p className={s.wrapper}>
 							<span className={s.line}>
-								From {base.mantra}
+								For {base.mantra}
 							</span>
 							<span className={s.line}>
 								And {highlight.mantra}
