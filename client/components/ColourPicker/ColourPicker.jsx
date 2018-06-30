@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { PickerContext } from "Contexts/picker-wheel.js";
 import ColourTextInput from "Components/ColourTextInput/ColourTextInput.jsx"; // input version #1
 import ColourSelector from "Components/ColourSelector/ColourSelector.jsx";    // input version #2
 import ColourWheel from "Components/ColourWheel/ColourWheel.jsx";             // input version #3
@@ -6,9 +7,34 @@ import s from "Components/ColourPicker/ColourPicker.css";
 
 export default class ColourPicker extends Component {
 
+	//LIFECYCLE JAZZ
+	//----------------------------------
+	constructor(...args){
+		super(...args);
+
+		//scope binding
+		this.toggleVisiblity = this.toggleVisiblity.bind(this);
+
+		//state initialisation
+		this.state = {
+			visible: false
+		};
+	}//constructor
+
+
+	//EVENT HANDLING
+	//--------------------------------
+	toggleVisiblity(event){
+		if(event) event.preventDefault();
+		this.setState({
+			visible: !this.state.visible
+		});
+	}//toggleVisiblity
+
+
 	//RENDER METHODS
 	//---------------------------------
-	render(props = this.props, state = this.state){
+	render(){
 
 		const {
 			colour                 = "",   // (string) hexcode for the currently selected colour
@@ -16,10 +42,20 @@ export default class ColourPicker extends Component {
 			name                   = "",   // (string) unique name for the selected colour
 			label                  = "",   // (string)[base, highlight, accent] role that the colour represents (used as storage and label ID)
 			debug                  = false // (boolean) used to toggle power-user controls
-		} = props;
+		} = this.props;
+
+		const {
+			visible = false
+		} = this.state;
 
 		//use the label to create an all lowercase and hyphenated id
 		const type       = label ? label.replace(/\s+/g, "-").toLowerCase() : "";
+
+		//context to pass down to the colour wheel so that we can open and close it
+		const context = {
+			visible,
+			toggleVisiblity: this.toggleVisiblity
+		};
 
 		//it's the same for all of the different inputs, so let's just enforce that by declaring here.
 		const inputProps = { 
@@ -35,8 +71,13 @@ export default class ColourPicker extends Component {
 					<output 
 						className={s.sample}
 						style={{backgroundColor: `#${colour}`}}
+						onClick={context.toggleVisiblity}
 					/>
-					<ColourWheel { ...inputProps } />
+					<PickerContext.Provider value={context}>
+						<ColourWheel
+							{ ...inputProps } 
+						/>
+					</PickerContext.Provider>
 				</div>
 			</fieldset>
 		);

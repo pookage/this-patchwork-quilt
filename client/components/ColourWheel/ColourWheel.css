@@ -1,0 +1,54 @@
+.wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;	
+	transition: transform 1s;
+	font-size: 200vh;
+	height: 1em;
+	width: 1em;
+	z-index: 3;
+}
+	.visible {
+		transform: translateX(0%) translateY(0%);
+	}
+	.hidden {
+		transform: translateX(-100%) translateY(-100%);
+	}
+	.wheel {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: -0.5em;
+		left: -0.5em;
+		background-color: #eee;
+		border-radius: 200%;
+		transition: transform 1s .6s;
+	}
+		.wheel:after {
+			content: "";
+			display: block;
+			height: 103%;
+			width: 103%;
+			position: absolute;
+			top: -1.5%;
+			left: -1.5%;
+			border-radius: 100%;
+			border: 2px solid #999;
+		}
+	.hidden .wheel {
+		transform: rotate(90deg);
+	}
+	.visible .wheel {
+		transform: rotate(0deg);
+	}
+	.closeButton {
+		position: absolute;
+		top: 50%;
+		left: 100%;
+		margin: 1em auto auto 1em;
+		padding: 1em;
+		z-index: 2;
+	}
+		.closeButton:hover {
+			cursor: pointer;
+		}
