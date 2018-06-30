@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { BannerContext, colourOptions, defaultColourSelection } from "Contexts/banner-colours.js";
 import ColourCatalogue from "Components/ColourCatalogue/ColourCatalogue.jsx";
-
+import BannerCanvas from "Components/BannerCanvas/BannerCanvas.jsx";
+import s from "Components/BannerBuilder/BannerBuilder.css";
 
 export default class BannerBuilder extends Component {
 	
@@ -51,15 +52,15 @@ export default class BannerBuilder extends Component {
 		};
 
 		return(
-			<article>
-				<h1>
+			<article class={s.wrapper}>
+				<h1 class={s.title}>
 					Banner Builder
 				</h1>
-				<form>
+				<form class={s.form}>
 					<BannerContext.Provider value={context}>
 						<ColourCatalogue />
 						<output>
-							<canvas ref={(ref) => this.$canvas = ref} />
+							<BannerCanvas />
 						</output>
 					</BannerContext.Provider>
 				</form>

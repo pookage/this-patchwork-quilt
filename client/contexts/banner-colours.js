@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
 
 export const colourOptions = {
-	"FFFFFF": {
-		colour: "FFFFFF",
+	"F0F0F0": {
+		colour: "F0F0F0",
 		name: "Endless Winter"
 	},
 	"8A0707": {
@@ -16,14 +16,18 @@ export const colourOptions = {
 	"EAD94E": {
 		colour: "EAD94E",
 		name: "Wheat Harvest"
+	},
+	"228B22": {
+		colour: "228B22",
+		name: "Ancient Forest"
 	}
 };
 
 export const defaultColourSelection = {
 	base: {
 		type: "base",
-		defaultColor: colourOptions["FFFFFF"].colour,
-		...colourOptions["FFFFFF"]
+		defaultColor: colourOptions["EAD94E"].colour,
+		...colourOptions["EAD94E"]
 	},
 	highlight: {
 		type: "highlight",

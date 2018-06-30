@@ -1,0 +1,16 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+	.title {
+		font-size: 2.612em;
+		margin: 1em auto;
+	}
+	.form {
+		display: flex;
+		justify-content: center;
+	}
+		.form > * {
+			flex: 1 0 50%;
+		}
