@@ -4,16 +4,16 @@
 	left: 0;	
 	font-size: 200vh;
 	height: 1em;
-	width: 1em;
+	width: 0.5em;
 	z-index: 3;
 	--gemSize: 50px;
 }
 	.visible {
-		transition: transform 1s;
+		transition: transform .6s;
 		transform: translateX(0%) translateY(0%);
 	}
 	.hidden {
-		transition: transform 1s .3s;
+		transition: transform 1s;
 		transform: translateX(-100%) translateY(-100%);
 	}
 
@@ -21,7 +21,7 @@
 	///////////////////////////*/
 	.wheel {
 		height: 100%;
-		width: 100%;
+		width: 200%;
 		position: absolute;
 		top: -0.5em;
 		left: -0.5em;

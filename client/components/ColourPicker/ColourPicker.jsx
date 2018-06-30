@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { PickerContext } from "Contexts/picker-wheel.js";
+import { UIContext } from "Contexts/UI.js";
 import ColourTextInput from "Components/ColourTextInput/ColourTextInput.jsx"; // input version #1
 import ColourSelector from "Components/ColourSelector/ColourSelector.jsx";    // input version #2
 import ColourWheel from "Components/ColourWheel/ColourWheel.jsx";             // input version #3
+import common from "Utils/common.css";
 import s from "Components/ColourPicker/ColourPicker.css";
 
 export default class ColourPicker extends Component {
@@ -68,11 +70,24 @@ export default class ColourPicker extends Component {
 			<fieldset
 				className={s.wrapper}>
 				<div className={s.container}>
-					<output 
-						className={s.sample}
-						style={{backgroundColor: `#${colour}`}}
-						onClick={context.toggleVisiblity}
-					/>
+					<UIContext.Consumer>
+						{UI => {
+							const {
+								overlayVisible = false,   // (boolean) whether or not an overlay has been enabled somewhere
+								toggleOverlay  = () => {} // (function) callback to alert the UI that there's an overlay
+							} = UI;
+							return(
+								<output 
+									className={`${s.sample} ${overlayVisible ? common.blur : ""}`}
+									style={{backgroundColor: `#${colour}`}}
+									onClick={(event) => {
+										context.toggleVisiblity()
+										toggleOverlay(true, event);
+									}}
+								/>
+							);
+						}}
+					</UIContext.Consumer>
 					<PickerContext.Provider value={context}>
 						<ColourWheel
 							{ ...inputProps } 

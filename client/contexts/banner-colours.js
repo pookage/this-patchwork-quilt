@@ -58,5 +58,7 @@ export const defaultColourSelection = {
 };
 export const BannerContext = React.createContext({
 	colours: defaultColourSelection,
-	setColours: () => {}
+	overlayVisible: false,
+	setColours: () => {},
+	toggleOverlay: () => {}
 });

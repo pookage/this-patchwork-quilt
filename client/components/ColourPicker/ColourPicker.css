@@ -15,7 +15,7 @@
 			height: 1em;
 			width: 1em;
 			border-radius: 100%;
-			transition: background-color .3s;
+			transition: background-color .3s, filter .3s .3s, opacity .3s .3s;
 		}
 			.sample:after {
 				content: "";

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { BannerContext, colourOptions, defaultColourSelection } from "Contexts/banner-colours.js";
+import { UIContext } from "Contexts/UI.js";
 import Mantra from "Components/Mantra/Mantra.jsx";
 import ColourCatalogue from "Components/ColourCatalogue/ColourCatalogue.jsx";
 import BannerCanvas from "Components/BannerCanvas/BannerCanvas.jsx";
+import common from "Utils/common.css";
 import s from "Components/ClanBuilder/ClanBuilder.css";
 
 export default class ClanBuilder extends Component {
@@ -45,32 +47,41 @@ export default class ClanBuilder extends Component {
 		const {} = this.props;
 
 		const {
-			colours = {} // (object) containing all of the currently selected colours
+			colours        = {}      // (object) containing all of the currently selected colours
 		} = this.state;
 
 		const context = {
-			colours,                    // (object) containing details about each currently selected colour
-			colourOptions,              // (object) containing all the available colours to choose from
-			saveColour: this.saveColour // (function) callback used to update the Provider's internal colour storage
+			colours,                          // (object) containing details about each currently selected colour
+			colourOptions,                    // (object) containing all the available colours to choose from
+			saveColour: this.saveColour,      // (function) callback used to update the Provider's internal colour storage
 		};
 
 		return(
 			<article className={s.wrapper}>
 				<form className={s.form}>
 					<BannerContext.Provider value={context}>
-						<header className={s.summary}>
-							<h1 className={s.name}>
-								<span className={s.prefix}>
-									House
-								</span>
-								<input
-									className={s.input} 
-									type="text" 
-									placeholder="Lancaster" 
-								/>
-							</h1>
-							<Mantra />
-						</header>
+						<UIContext.Consumer>
+							{UI => {
+								const {
+									overlayVisible = false // (boolean) whether or not an overlay has been opened somewhere
+								} = UI;
+								return(
+									<header className={`${s.summary} ${overlayVisible ? common.blur : ""}`}>
+										<h1 className={s.name}>
+											<span className={s.prefix}>
+												House
+											</span>
+											<input
+												className={s.input} 
+												type="text" 
+												placeholder="Lancaster" 
+											/>
+										</h1>
+										<Mantra />
+									</header>
+								);
+							}}
+						</UIContext.Consumer>
 						<div className={s.banner}>
 							<ColourCatalogue />
 							<output>

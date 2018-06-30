@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { PickerContext } from "Contexts/picker-wheel.js";
 import { BannerContext } from "Contexts/banner-colours.js";
+import { UIContext } from "Contexts/UI.js";
 import s from "Components/ColourWheel/ColourWheel.css";
 
 export default class ColourWheel extends Component {
@@ -15,7 +16,6 @@ export default class ColourWheel extends Component {
 		this.layoutColours     = this.layoutColours.bind(this);
 		this.updateColour      = this.updateColour.bind(this);
 		this.updatePreview     = this.updatePreview.bind(this);
-		this.reset             = this.reset.bind(this);
 
 		this.colourData = [];    // (array) containing all of the colours from the BannerContext.Provider
 
@@ -36,11 +36,6 @@ export default class ColourWheel extends Component {
 
 	//EVENT HANDLING
 	//---------------------------------
-	reset(toggleVisiblity, event){
-		event.preventDefault();
-		toggleVisiblity(event);
-		this.setState({ ...this.defaultState });
-	}//reset
 	updatePreview(event){
 		const {
 			value
@@ -173,34 +168,30 @@ export default class ColourWheel extends Component {
 		} = this.state;
 
 		return(
-
 			<PickerContext.Consumer>
 				{pickerContext => {
 					const {
 						visible         = false,   // (boolean) whether or not to display the colour-wheel
 						toggleVisiblity = () => {} // (function) callback used to toggle the visible state
 					} = pickerContext;
-
 					return(
 						<BannerContext.Consumer>
 							{bannerContext => {
-
 								const {
-									colourOptions = {},      // (object) containing all of the available colours
-									saveColour    = () => {} // (function) callback used to save a colour from the available colourOptions
+									colourOptions = {},       // (object) containing all of the available colours
+									saveColour    = () => {}, // (function) callback used to save a colour from the available colourOptions
 								} = bannerContext;
 
 								const colourData = this.colourData = Object.values(colourOptions);
 								const colours    = colourData.map(this.renderColour.bind(true, colourData.length, pickerContext, bannerContext));
 								
 								const {
-									name        = "",
-									description = ""
+									name        = "", // (string) unique name of the current colour
+									description = ""  // (string) a description of the colour and what it means
 								} = colourOptions[preview || defaultOption];
 
 								return(
 									<div className={`${s.wrapper} ${visible ? s.visible : s.hidden}`}>
-
 										<div 
 											className={s.wheel}
 											ref={(ref) => this.$wheel = ref}>
@@ -216,11 +207,25 @@ export default class ColourWheel extends Component {
 												<div className={s.colours}>
 													{colours}
 												</div>
-												<button
-													className={s.closeButton} 
-													onClick={this.reset.bind(true, toggleVisiblity)}>
-													Close
-												</button>
+												<UIContext.Consumer>
+													{UI => {
+														const {
+															toggleOverlay = () => {}  // (function) callback to alert the provider that an overlay status has changed
+														} = UI;
+
+														return(
+															<button
+																className={s.closeButton} 
+																onClick={(event) => {
+																	toggleVisiblity(event);
+																	toggleOverlay(false, event);
+																	this.setState({ ...this.defaultState });
+																}}>
+																Close
+															</button>
+														);
+													}}
+												</UIContext.Consumer>
 											</div>
 										</div>
 									</div>
@@ -231,6 +236,6 @@ export default class ColourWheel extends Component {
 				}}
 			</PickerContext.Consumer>
 		);
-	}
+	}//render
 
 }

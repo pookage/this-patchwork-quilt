@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { BannerContext } from "Contexts/banner-colours.js";
+import { UIContext } from "Contexts/UI.js";
+import common from "Utils/common.css";
 import s from "Components/BannerCanvas/BannerCanvas.css";
 
 export default class BannerCanvas extends Component {
@@ -91,23 +93,32 @@ export default class BannerCanvas extends Component {
 	//---------------------------------
 	render(){
 		return(
-			<BannerContext.Consumer>
-				{(context) => {
-
+			<UIContext.Consumer>
+				{UI => {
 					const {
-						colours = {}
-					} = context;
-
-					this.colours = colours;
-
+						overlayVisible = false // (boolean) whether or not an overlay has been opened somewhere
+					} = UI;
 					return(
-						<canvas
-							className={s.canvas}
-							ref={(ref) => this.$canvas = ref} 
-						/>
+						<BannerContext.Consumer>
+							{context => {
+
+								const {
+									colours = {}
+								} = context;
+
+								this.colours = colours;
+
+								return(
+									<canvas
+										className={`${s.canvas} ${overlayVisible ? common.blur : ""}`}
+										ref={(ref) => this.$canvas = ref} 
+									/>
+								);
+							}}
+						</BannerContext.Consumer>
 					);
 				}}
-			</BannerContext.Consumer>
+			</UIContext.Consumer>
 		);
 	}//render
 
