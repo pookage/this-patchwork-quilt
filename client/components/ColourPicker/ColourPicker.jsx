@@ -17,7 +17,7 @@ export default class ColourPicker extends Component {
 
 		//state initialisation
 		this.state = {
-			visible: true // (boolean) whether or not to display the colour wheel for the picker
+			visible: false // (boolean) whether or not to display the colour wheel for the picker
 		};
 	}//constructor
 

@@ -2,16 +2,17 @@
 	position: fixed;
 	top: 0;
 	left: 0;	
-	transition: transform 1s;
-	font-size: 100vh; /*200vh; */
+	font-size: 200vh;
 	height: 1em;
 	width: 1em;
 	z-index: 3;
 }
 	.visible {
+		transition: transform 1s;
 		transform: translateX(0%) translateY(0%);
 	}
 	.hidden {
+		transition: transform 1s .3s;
 		transform: translateX(-100%) translateY(-100%);
 	}
 
@@ -21,11 +22,10 @@
 		height: 100%;
 		width: 100%;
 		position: absolute;
-		/*top: -0.5em;*/
-		/*left: -0.5em;*/
-		background-color: #eee;
+		top: -0.5em;
+		left: -0.5em;
+		background-color: #efefef;
 		border-radius: 200%;
-		transition: transform 1s .6s;
 	}
 		.wheel:after {
 			content: "";
@@ -40,9 +40,11 @@
 		}
 	.hidden .wheel {
 		transform: rotate(90deg);
+		transition: transform .6s;
 	}
 	.visible .wheel {
 		transform: rotate(0deg);
+		transition: transform 1s .6s;
 	}
 
 		/* CLOSE BUTTON 
@@ -69,7 +71,6 @@
 			display: flex;
 			justify-content: center;
 			align-items: flex-start;
-			counter-reset: colourIndex
 		}
 			.colourWrapper {
 				position: absolute;
@@ -77,13 +78,30 @@
 				font-size: 50px;
 				width: 1em;
 				transform-origin: center bottom;
+				transition: transform .3s;
 			}
 				.colour {
 					top: 0.25em;
 					left: 0;
-					height: 1em;
-					width: 1em;
+					height: 2em;
+					width: 2em;
 					position: absolute;
 					border-radius: 100%;
-					border: 0.1em solid #fff;
+					border: 0.1em solid rgba(255,255,255,0.1);
+					overflow: hidden;
+					box-shadow: 0 0.25em 0.2em rgba(0,0,0,0.1);
 				}
+					.colour:after {
+						content: "";
+						display: block;
+						font-size: 0.5em;
+						height: 70%;
+						width:  70%;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translateX(-50%) translateY(-50%);
+						background-image: url("/client/assets/images/hexagonal.svg");
+						background-size: 100% 100%;
+						opacity: 0.1;
+					}

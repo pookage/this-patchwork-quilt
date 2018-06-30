@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
 
 export const colourOptions = {
-	"F0F0F0": {
-		colour: "F0F0F0",
+	"e5e5e5": {
+		colour: "e5e5e5",
 		name: "Endless Winter",
 		mantra: "this endless winter"
 	},

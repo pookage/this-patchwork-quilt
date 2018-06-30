@@ -11,11 +11,62 @@ export default class ColourWheel extends Component {
 		super(...args);
 
 		//scope binding
-		this.renderColour = this.renderColour.bind(this);
+		this.renderColour      = this.renderColour.bind(this);
+		this.layoutColours     = this.layoutColours.bind(this);
 
-		this.colourData = []; // (array) containing all of the colours from the BannerContext.Provider
+		this.colourData = [];    // (array) containing all of the colours from the BannerContext.Provider
+		this.visible    = false; // (boolean) containing whether or not we 
 	}//constructor
+	componentDidMount(){
+		const windowReadyCheck = setInterval(() => {
+			if(window.innerHeight){
+				clearInterval(windowReadyCheck);
+				this.layoutColours(this.colourData);
+				console.log("still intervalling")
+			}
+		}, 500);
+	}//componentDidUpdate
 
+
+	//UTILS
+	//---------------------------------
+	layoutColours(colours){
+
+		const {
+			innerHeight
+		} = window;
+
+		const wheelWidth    = this.$wheel.getBoundingClientRect().width;
+		const wheelRadius   = wheelWidth / 2;
+		const startRotation = 90;
+
+		for(let index in colours){
+
+			const {
+				colour = ""
+			} = colours[index];
+
+			const ref            = `$wheel_picker_${colour}`;
+			const swatchRef      = `${ref}_colour`;
+			const element        = this[ref];
+			const swatch         = this[swatchRef];
+
+			const {
+				width: colourWidth,
+				top: colourMargin
+			} = getComputedStyle(swatch);
+
+			const colourDiameter    = parseInt(colourWidth);
+			const distanceFromEdge  = colourDiameter + parseInt(colourMargin);
+			const colourSpacing     = colourDiameter * 0.25;
+			const wheelCircumfrence = (Math.PI * 2) * (wheelRadius - distanceFromEdge);
+			const share             = 360 * ((colourDiameter + colourSpacing) / wheelCircumfrence);
+			const rotation          = startRotation + (index * share);
+			const transformStyle    = `rotate(${rotation}deg)`;
+
+			element.style.transform = transformStyle;
+		}
+	}//layoutColours
 
 
 	//RENDER METHODS
@@ -28,31 +79,20 @@ export default class ColourWheel extends Component {
 			mantra
 		} = data;
 
-		const colourRef = `wheel_picker_${colour}`;
-		// const share     = 360 / colourCount;
-		// const rotation  = index * share;
-
-
-		//this should maybe be moved out so that we can do getComputedStyle
-		const {
-			outerHeight: windowHeight                    // (needs to actually be getComputedStyle(wrapper).width)
-		} = window;
-		const colourDiameter    = 50;                    //(needs to actually be getComputedStyle(colourRef).width)
-		const colourMargin      = colourDiameter * 0.25; // needs to actually be getComputedStyle(colourRef).top
-
-		const colourSpacing     = colourDiameter * 0.25;
-		const wheelRadius       = (1 * windowHeight) / 2;
-		const wheelCircumfrence = (Math.PI * 2) * (wheelRadius - colourDiameter);
-		const share             = 360 * ((colourDiameter + colourSpacing) / wheelCircumfrence);
-		const rotation          = index * share;
+		const key      = `wheel_picker_${colour}`;
+		const refKey   = `$${key}`;
+		const share    = 360 / colourCount;
+		const rotation = share * index; 
 
 		return(
 			<div 
 				className={s.colourWrapper}
-				key={colourRef}
+				key={key}
+				ref={(ref) => this[refKey] = ref}
 				style={{transform: `rotate(${rotation}deg)`}}>
 				<div 
 					className={s.colour}
+					ref={(ref) => this[`${refKey}_colour`] = ref}
 					style={{ backgroundColor: `#${colour}`}}
 				/>
 			</div>
@@ -80,7 +120,6 @@ export default class ColourWheel extends Component {
 
 								const colourData = this.colourData = Object.values(colourOptions);
 								const colours    = colourData.map(this.renderColour.bind(true, colourData.length));
-
 
 								return(
 									<div className={`${s.wrapper} ${visible ? s.visible : s.hidden}`}>
