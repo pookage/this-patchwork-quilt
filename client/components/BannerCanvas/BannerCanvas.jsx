@@ -56,7 +56,7 @@ export default class BannerCanvas extends Component {
 		canvas.width  = width;
 
 
-		const stripeWidth = width / 3;
+		const stripeWidth = Math.ceil(width / 3);
 		const half        = width / 2;
 		const cutout      = height / 1.618;
 
