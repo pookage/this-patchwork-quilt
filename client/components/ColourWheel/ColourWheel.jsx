@@ -19,11 +19,13 @@ export default class ColourWheel extends Component {
 		this.updatePreview     = this.updatePreview.bind(this);
 		this.reset             = this.reset.bind(this);
 
-		this.colourData = [];    // (array) containing all of the colours from the BannerContext.Provider
+		this.colourData = []; // (array) containing all of the colours from the BannerContext.Provider
 
 		this.defaultState = {
 			preview: "" // (string) hexcode of the description for the currently active colour
 		}
+
+		//spreading a default state for the reset() function to hook onto
 		this.state = { ...this.defaultState };
 	}//constructor
 	componentDidMount(){
@@ -250,5 +252,4 @@ export default class ColourWheel extends Component {
 			</PickerContext.Consumer>
 		);
 	}//render
-
 }

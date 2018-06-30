@@ -31,6 +31,6 @@ export default class Mantra extends Component {
 				}}
 			</BannerContext.Consumer>
 		);
-	}
+	}//render
 
 }
