@@ -68,7 +68,7 @@ export default class ClanBuilder extends Component {
 										<input
 											className={s.input} 
 											type="text" 
-											placeholder="Lancaster" 
+											placeholder="Mouse" 
 										/>
 									</h1>
 									<Mantra />

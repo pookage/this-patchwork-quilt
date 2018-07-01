@@ -17,6 +17,7 @@ export default class ColourWheel extends Component {
 		this.layoutColours     = this.layoutColours.bind(this);
 		this.updateColour      = this.updateColour.bind(this);
 		this.updatePreview     = this.updatePreview.bind(this);
+		this.rotateWheel       = this.rotateWheel.bind(this);
 		this.reset             = this.reset.bind(this);
 
 		this.colourData = []; // (array) containing all of the colours from the BannerContext.Provider
@@ -29,13 +30,37 @@ export default class ColourWheel extends Component {
 		this.state = { ...this.defaultState };
 	}//constructor
 	componentDidMount(){
-
+		window.addEventListener("wheel", this.rotateWheel);
 		this.initialiseLayout();
 	}//componentDidUpdate
+	componentWillUnmount(){
+		window.removeEventListener("wheel", this.rotateWheel);
+	}//componentWillUnmount
 
 
 	//EVENT HANDLING
 	//---------------------------------
+	rotateWheel(event){
+		requestAnimationFrame(() => {
+			const {
+				deltaY = 1
+			} = event;
+
+			const rotationDirection = deltaY;
+			const rotationDegrees   = (rotationDirection / 360) * 10;
+			const rotationSpeed     = 2;
+			const currentTransform  = this.$spinner.style.transform;
+
+			let currentRotation;
+			if(currentTransform) {
+				const splitRotation = currentTransform.split("rotate(")[1].split(")")[0].split("deg")[0];
+				currentRotation     = parseInt(splitRotation);
+			} else currentRotation = 0;
+
+			const nextRotation = currentRotation + (rotationDegrees * rotationSpeed);
+			this.$spinner.style.transform = `rotate(${nextRotation}deg)`;
+		})
+	}//rotateWheel
 	updatePreview(event){
 		const {
 			value: preview // (string) hexcode of the colour currently being hovered
@@ -178,7 +203,6 @@ export default class ColourWheel extends Component {
 					onMouseOver={this.updatePreview}
 					type="radio" 
 					value={colour}
-					checked={selected}
 				/>
 			</div>
 		);
@@ -231,7 +255,9 @@ export default class ColourWheel extends Component {
 														{description}
 													</p>
 												</div>
-												<div className={s.spinner}>
+												<div 
+													className={s.spinner}
+													ref={(ref) => this.$spinner = ref}>
 													<div className={s.colours}>
 														{colours}
 													</div>

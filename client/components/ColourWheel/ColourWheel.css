@@ -65,7 +65,7 @@
 		}
 		.visible .spinner {
 			transform: rotate(0deg);
-			transition: transform 1s .3s;
+			transition: transform .6s;
 		}
 			.spinner:after {
 				content: "";
@@ -125,8 +125,7 @@
 						border-radius: 100%;
 						border: 0.1em solid rgba(255,255,255,0.1);
 						box-shadow: 0 0.125em 0.1em rgba(0,0,0,0.1);
-						filter: saturate(0.3);
-						opacity: 0.5;
+						/*filter: saturate(0.5);*/
 						transform: scale(0.9);
 						-webkit-appearance: none;
 						-moz-appearance: none;
@@ -142,7 +141,7 @@
 					.colour:hover {
 						transform: scale(1);
 						box-shadow: 0 0.25em 0.3em rgba(0,0,0,0.1);
-						filter: saturate(1);
+						/*filter: saturate(1);*/
 						opacity: 1;
 					}
 						.colour:hover {

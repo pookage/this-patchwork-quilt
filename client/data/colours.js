@@ -1,15 +1,27 @@
 export const colours = {
+	"a4aab2": {
+		colour: "a4aab2",
+		name: "Stolen Silver",
+		mantra: "these misplaced items",
+		description: "What's yours is mine; what's mine is ours."
+	},
 	"e5e5e5": {
 		colour: "e5e5e5",
 		name: "Endless Winter",
 		mantra: "this endless winter",
 		description: "There is comfort in the cold; strength in the ice; relief from the hearth. We prevail."
 	},
+	"ede4cb": {
+		colour: "ede4cb",
+		name: "Saintly Bone",
+		mantra: "this holy relic",
+		description: "In the martyrs of old we place our trust; may the power of their bones grant us health and peace."
+	},
 	"c45e67": {
 		colour: "c45e67",
 		name: "Slapped Cheeks",
 		mantra: "these slapped cheeks",
-		description: "God. Fucking. Dammit, Sho."
+		description: "A word to the wise; guard your tongue or risk a scolding."
 	},
 	"7f2727": {
 		colour: "7f2727",
@@ -23,6 +35,12 @@ export const colours = {
 		mantra: "the closing day",
 		description: "Each day is a victory; each sunset a reward for our perseverance. Tomorrow may be our last, but we will face it with courage."
 	},
+	"ccb000": {
+		colour: "ccb000",
+		name: "Royal Reliquary",
+		mantra: "the divine right of our rulers",
+		description: "We trust in our rulers; may their divine wisdom guide us in these troubled times."
+	},
 	"e0d264": {
 		colour: "e0d264",
 		name: "Wheat Harvest",
@@ -33,8 +51,15 @@ export const colours = {
 		colour: "4a844a",
 		name: "Ancient Forest",
 		mantra: "the ancient forest",
-		description: "The shade of the Great Oak gives reprieve from the sun, berries from the bush hunger, and water from the stream thirst. The forest provides - as do we."
+		description: "The shade of the Great Oak gives reprieve from the sun, berries from the bush sate hunger, and water from the stream quenches thirst. The forest provides - as do we."
 	},
+	"77b4ea": {
+		colour: "77b4ea",
+		name: "Travelling Troupe",
+		mantra: "this happy band",
+		description: "Mirth, mead. and the open road; this green earth is here to be enjoyed and we intend to."
+	},
+
 	"252e59": {
 		colour: "252e59",
 		name: "Stormy Sea",
