@@ -19,6 +19,7 @@ export default class ColourWheel extends Component {
 		this.updatePreview     = this.updatePreview.bind(this);
 		this.rotateWheel       = this.rotateWheel.bind(this);
 		this.reset             = this.reset.bind(this);
+		this.order             = this.order.bind(this);
 
 		this.colourData = []; // (array) containing all of the colours from the BannerContext.Provider
 
@@ -164,6 +165,9 @@ export default class ColourWheel extends Component {
 			element.style.transform = transformStyle;
 		}
 	}//layoutColours
+	order(a, b){
+		return a.order - b.order;
+	}//sortByOrder
 
 
 	//RENDER METHODS
@@ -232,7 +236,7 @@ export default class ColourWheel extends Component {
 									};
 
 									//extract out only the values from the available colour options
-									const colourData = this.colourData = Object.values(Banner.colourOptions);
+									const colourData = this.colourData = Object.values(Banner.colourOptions).sort(this.order);
 									//then render them out as radio buttons
 									const colours    = colourData.map(this.renderColour.bind(true, colourData.length, contexts));
 									
