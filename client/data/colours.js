@@ -20,12 +20,29 @@ export const colours = {
 		description: "In the martyrs of old we place our trust; may the power of their bones grant us health and peace.",
 		order: 3
 	},
+	
+	"c1a160": {
+		colour: "c1a160",
+		name: "Scholarly Graft",
+		mantra: "these crumbling books",
+		description: "In books can be found great wisdom; through persistence and diligence the secrets of the world are revealed.",
+		order: 3.9
+	},
+
 	"7f2727": {
 		colour: "7f2727",
 		name: "Blood of Our Fallen",
 		mantra: "the blood of our fallen",
 		description: "Our glorious dead are gone but never forgotten; we honour them and their deeds. We fight on.",
 		order: 4
+	},
+
+	"b71414": {
+		colour: "b71414",
+		name: "Blood of Our Enemies",
+		mantra: "the blood of our foes",
+		description: "Ugh you suck.",
+		order: 4.1
 	},
 	"c45e67": {
 		colour: "c45e67",
@@ -36,7 +53,7 @@ export const colours = {
 	},
 	"d8864b": {
 		colour: "d8864b",
-		name: "Sunset",
+		name: "Sunset Dawn",
 		mantra: "the closing day",
 		description: "Each day is a victory; each sunset a reward for our perseverance. Tomorrow may be our last, but we will face it with courage.",
 		order: 6
@@ -50,7 +67,7 @@ export const colours = {
 	},
 	"e0d264": {
 		colour: "e0d264",
-		name: "Wheat Harvest",
+		name: "Summer Harvest",
 		mantra: "the bountiful harvest",
 		description: "These lands are our lands, and their fruits provide for us. We work, we toil, we feast.",
 		order: 8
@@ -81,6 +98,13 @@ export const colours = {
 		name: "Stargazer",
 		mantra: "these guiding lights",
 		description: "With our eyes to the heavens we have observed the passage of time: our present and future; the stars know all.",
+		order: 11.9
+	},
+	"692a82": {
+		colour: "692a82",
+		name: "Sanguis Nobilis",
+		mantra: "this noble lineage",
+		description: "With superior breeding and careful stewardship, we ensure the family legacy; with nobility, authority.",
 		order: 12
 	},
 	"252e59": {
