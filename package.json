@@ -8,12 +8,11 @@
 		"build": "webpack -p"
 	},
 	"dependencies": {
-		"html-webpack-plugin": "^2.26.0",
 		"react": "^16.4.1",
-		"react-dom": "^16.4.1",
-		"webpack": "^1.14.0"
+		"react-dom": "^16.4.1"
 	},
 	"devDependencies": {
+		"html-webpack-plugin": "^2.26.0",
 		"babel-core": "^6.21.0",
 		"babel-loader": "^6.2.10",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -23,6 +22,7 @@
 		"extract-text-webpack-plugin": "^2.1.2",
 		"file-loader": "^1.1.11",
 		"style-loader": "^0.16.1",
+		"webpack": "^1.14.0",
 		"webpack-dev-server": "^1.16.2"
 	}
 }

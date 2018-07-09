@@ -2,6 +2,7 @@
 	display: block;
 	height: 20vw;
 	width: 20vw;
-	background: radial-gradient(#1c1614, #3a3534);
+	background: url(Assets/images/cut_socket.svg) center / contain no-repeat,
+				#111;
 	border-radius: 100%
 }
