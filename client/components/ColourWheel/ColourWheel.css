@@ -158,7 +158,7 @@
 							top: 50%;
 							left: 50%;
 							transform: translateX(-50%) translateY(-50%);
-							background-image: url("/client/assets/images/hexagonal.svg");
+							background-image: url("Assets/images/hexagonal.svg");
 							background-size: 100% 100%;
 							opacity: 0.1;
 							transition: opacity .3s;
