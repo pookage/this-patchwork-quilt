@@ -1,0 +1,7 @@
+.wrapper {
+	display: block;
+	height: 20vw;
+	width: 20vw;
+	background: radial-gradient(#1c1614, #3a3534);
+	border-radius: 100%
+}
