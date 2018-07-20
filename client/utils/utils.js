@@ -1,7 +1,5 @@
 function getQueryParams(queryString){
 
-	console.log(typeof window)
-
 	if(typeof window != "undefined"){
 		const queryParams = queryString || window.location.search.substr(1);	
 
