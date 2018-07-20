@@ -6,3 +6,5 @@ A multiplayer geolocation-based city-builder with a fedual theme.
 
 
 ![Version #2 of Banner-Creation](https://raw.githubusercontent.com/pookage/this-patchwork-quilt/master/screenshots/banner-demo-v2.gif)
+
+![Version #1 of Drag'n'Drop Gem Sockets](https://raw.githubusercontent.com/pookage/this-patchwork-quilt/master/screenshots/gem-sockets-v1.gif)
