@@ -12,9 +12,9 @@ export default class Sandbox extends Component {
 					<GemSocket id="a">
 						<GemStone colour="#b71414" />
 					</GemSocket>
-					<p>
-						Source Gem
-					</p>
+					<GemSocket id="a">
+						<GemStone colour="#77b4ea" />
+					</GemSocket>
 				</div>
 				<div className={s.example}>
 					<GemSocket id="b"/>

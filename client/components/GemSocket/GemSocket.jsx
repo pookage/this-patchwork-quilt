@@ -85,6 +85,9 @@ export default class GemSocket extends Component {
 					value={colour}
 					onChange={this.colourUpdated}
 				/>
+				<p className={s.label}>
+					{gemColour || "None"}
+				</p>
 			</div>
 		);
 	}//render

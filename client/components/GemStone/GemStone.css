@@ -1,8 +1,13 @@
 .wrapper {}	
+	.wrapper.dragging {
+		position: relative;
+		z-index: 99;
+	}
 	.container {
 		pointer-events: none
 	}
 		.gem {
+			position: relative;
 			font-size: 0.8em;
 			display: flex;
 			height: 1em;
@@ -35,4 +40,5 @@
 			}
 			.wrapper.dragging .gem{
 				transform: scale(1.5);
+				z-index: 2
 			}

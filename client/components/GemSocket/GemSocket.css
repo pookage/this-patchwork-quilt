@@ -1,8 +1,10 @@
 .wrapper {
-	font-size: 20vw;
+	position: relative;
+	font-size: 15vw;
 	display: flex;
 	height: 1em;
 	width: 1em;
+	margin: 0.2em auto;
 	justify-content: center;
 	align-items: center;
 	background: url(Assets/images/cut_socket.svg) center / contain no-repeat, #111;
@@ -16,4 +18,14 @@
 		height: 0;
 		width: 0;
 		overflow: hidden;
+	}
+	.label {
+		position: absolute;
+		bottom: 0;
+		transform: translateY(200%);
+		font-size: 2rem;
+		text-align: center;
+	}
+	.label span {
+		display: block;
 	}
