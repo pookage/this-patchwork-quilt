@@ -17,6 +17,9 @@ export default class GemStone extends Component {
 		};
 
 	}//constructor
+	componentWillUnmount(){
+		window.removeEventListener("drag", this.move);
+	}//componentWillUnmount
 
 
 
