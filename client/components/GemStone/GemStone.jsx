@@ -19,6 +19,7 @@ export default class GemStone extends Component {
 	}//constructor
 	componentWillUnmount(){
 		window.removeEventListener("drag", this.move);
+		cancelAnimationFrame(this.moveAnimation);
 	}//componentWillUnmount
 
 
@@ -64,7 +65,7 @@ export default class GemStone extends Component {
 		});		
 	}//drag
 	move(event){
-		requestAnimationFrame(() => {
+		this.moveAnimation = requestAnimationFrame(() => {
 			const {
 				clientX,
 				clientY

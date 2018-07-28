@@ -12,17 +12,17 @@ export default class GemSocket extends Component {
 		this.dragDrop = this.dragDrop.bind(this);
 
 		this.state = {
-			gemColour: ""
+			gemColour: null
 		};
 	}
 
 	//EVENT HANDLING
 	//----------------------------
-	colourUpdated(event){
-		console.log("colour updated : ", event)
-	}//colourUpdated
+	colourUpdated(){
+		console.log("ra")
+	}
 	dragEnter(event){
-		console.log("enter")
+	//	console.log("enter")
 	}
 	dragLeave(event){
 		const {
@@ -32,7 +32,7 @@ export default class GemSocket extends Component {
 	}
 	dragOver(event){
 		event.preventDefault();
-		console.log("over")
+		//console.log("over")
 	}
 	dragDrop(event){
 		const colour = event.dataTransfer.getData("text");
@@ -76,18 +76,16 @@ export default class GemSocket extends Component {
 				{gemColour && (
 					<GemStone 
 						colour={gemColour} 
-						removeGem={this.setColour.bind(true, "")}
+						removeGem={this.setColour.bind(true, null)}
 					/>
 				)}
-				<input					
-					className={s.input} 
-					type="color"
-					value={colour}
-					onChange={this.colourUpdated}
-				/>
-				<p className={s.label}>
-					{gemColour || "None"}
-				</p>
+				{colour && (
+					<input					
+						className={s.input} 
+						type="color"
+						defaultValue={colour}
+					/>
+				)}
 			</div>
 		);
 	}//render
