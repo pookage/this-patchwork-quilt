@@ -9,11 +9,8 @@ export default class Sandbox extends Component {
 		return(
 			<div className={s.wrapper}>
 				<div className={`${s.example} ${s.source}`}>
-					<GemSocket>
+					<GemSocket source>
 						<GemStone colour="#b71414" />
-					</GemSocket>
-					<GemSocket>
-						<GemStone colour="#77b4ea" />
 					</GemSocket>
 				</div>
 				<div className={s.example}>

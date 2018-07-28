@@ -1,31 +1,26 @@
 .wrapper {
 	position: relative;
 	font-size: 15vw;
-	display: flex;
 	height: 1em;
 	width: 1em;
 	margin: 0.2em auto;
-	justify-content: center;
-	align-items: center;
 	background: url(Assets/images/cut_socket.svg) center / contain no-repeat, #111;
 	border-radius: 100%
 }
-	.input {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		background-color: transparent;
-		height: 0;
-		width: 0;
-		overflow: hidden;
+	.container {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
-	.label {
-		position: absolute;
-		bottom: 0;
-		transform: translateY(200%);
-		font-size: 2rem;
-		text-align: center;
-	}
-	.label span {
-		display: block;
-	}
+		.input {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			background-color: transparent;
+			height: 0;
+			width: 0;
+			overflow: hidden;
+		}

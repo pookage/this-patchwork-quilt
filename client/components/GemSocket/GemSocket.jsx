@@ -12,15 +12,12 @@ export default class GemSocket extends Component {
 		this.dragDrop = this.dragDrop.bind(this);
 
 		this.state = {
-			gemColour: null
+			colour: null
 		};
 	}
 
 	//EVENT HANDLING
 	//----------------------------
-	colourUpdated(){
-		console.log("ra")
-	}
 	dragEnter(event){
 	//	console.log("enter")
 	}
@@ -35,11 +32,10 @@ export default class GemSocket extends Component {
 		//console.log("over")
 	}
 	dragDrop(event){
+		//get the colour from the data set in the <GemStone>
 		const colour = event.dataTransfer.getData("text");
-		this.setState({
-			colour
-		});
-	}
+		this.setColour(colour);
+	}//dragDrop
 
 	//UTILS
 	//-----------------------------
@@ -55,15 +51,17 @@ export default class GemSocket extends Component {
 	render(){
 
 		const {
-			children: gemStone,
+			source = false,     // (boolean) whether or not the gem is a place to drag the gem from or to
+			children: gemStone, // (VNode) the <GemStone> placed inside a source socket at creation to determine the colour it provides
 			...remainingProps
 		} = this.props;
 
 		const {
-			colour
+			colour: currentColour = null // (string, null) the current colour set by the gem last dropped in it (only used for non-source sockets)
 		} = this.state;
 
-		const gemColour = (gemStone && gemStone.props.colour) || colour;
+		//use the colour of the source gem if it's a source socket, or the colour from the state if not
+		const gemColour = source ? gemStone.props.colour : currentColour;
 
 		return(
 			<div
@@ -74,17 +72,17 @@ export default class GemSocket extends Component {
 				onDragLeave={this.dragLeave}
 				onDrop={this.dragDrop}>
 				{gemColour && (
-					<GemStone 
-						colour={gemColour} 
-						removeGem={this.setColour.bind(true, null)}
-					/>
-				)}
-				{colour && (
-					<input					
-						className={s.input} 
-						type="color"
-						defaultValue={colour}
-					/>
+					<div className={s.container}>
+						<GemStone 
+							colour={gemColour} 
+							removeGem={this.setColour.bind(true, null)}
+						/>
+						<input					
+							className={s.input} 
+							type="color"
+							defaultValue={gemColour}
+						/>
+					</div>
 				)}
 			</div>
 		);

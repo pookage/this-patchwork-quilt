@@ -11,6 +11,7 @@ export default class GemStone extends Component {
 		this.returnHome    = this.returnHome.bind(this);
 		this.drag = this.drag.bind(this);
 		this.move = this.move.bind(this);
+		this.requestMove = this.requestMove.bind(this);
 
 		this.state = {
 			drag: false
@@ -18,7 +19,7 @@ export default class GemStone extends Component {
 
 	}//constructor
 	componentWillUnmount(){
-		window.removeEventListener("drag", this.move);
+		window.removeEventListener("drag", this.requestMove);
 		cancelAnimationFrame(this.moveAnimation);
 	}//componentWillUnmount
 
@@ -30,7 +31,7 @@ export default class GemStone extends Component {
 
 		let xDiff, yDiff;
 		if(drag){
-			window.addEventListener("drag", this.move);
+			window.addEventListener("drag", this.requestMove);
 
 			const {
 				width, height,
@@ -52,7 +53,7 @@ export default class GemStone extends Component {
 				removeOnDrop
 			} = this.state;
 
-			window.removeEventListener("drag", this.move);
+			window.removeEventListener("drag", this.requestMove);
 			xDiff = 0;
 			yDiff = 0;
 
@@ -64,8 +65,13 @@ export default class GemStone extends Component {
 			drag
 		});		
 	}//drag
+	requestMove(event){
+		this.moveAnimation = requestAnimationFrame(this.move.bind(true, event));
+	}//requestMove
+
 	move(event){
-		this.moveAnimation = requestAnimationFrame(() => {
+
+		if(this.$wrapper){
 			const {
 				clientX,
 				clientY
@@ -88,7 +94,7 @@ export default class GemStone extends Component {
 					yDiff
 				});
 			}
-		})
+		}
 	}//move
 	setupDragData(event){
 		event.dataTransfer.setData("text", this.props.colour);
@@ -96,6 +102,7 @@ export default class GemStone extends Component {
 		event.dataTransfer.setDragImage(this.$empty, 0, 0);
 	}//setupDragData
 	leftHome(event){
+		//BUG : if you leave quickly then this never fires
 		this.setState({
 			removeOnDrop: true
 		});
