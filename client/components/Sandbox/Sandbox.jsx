@@ -16,9 +16,6 @@ export default class Sandbox extends Component {
 				<div className={s.example}>
 					<GemSocket />
 				</div>
-				<div className={s.example}>
-					<GemSocket />
-				</div>
 			</div>
 		);
 	}//render
