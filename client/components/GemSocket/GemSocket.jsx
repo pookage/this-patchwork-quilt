@@ -30,8 +30,11 @@ export default class GemSocket extends Component {
 	//UTILS
 	//-----------------------------
 	setColour(colour){
+
+		const placed = colour != this.state.colour;
 		this.setState({
-			colour
+			colour,
+			placed
 		});
 	}//setColour
 
@@ -47,7 +50,8 @@ export default class GemSocket extends Component {
 		} = this.props;
 
 		const {
-			colour: currentColour = null // (string, null) the current colour set by the gem last dropped in it (only used for non-source sockets)
+			colour: currentColour = null, // (string, null) the current colour set by the gem last dropped in it (only used for non-source sockets)
+			placed = false
 		} = this.state;
 
 		//use the colour of the source gem if it's a source socket, or the colour from the state if not
@@ -61,7 +65,8 @@ export default class GemSocket extends Component {
 				onDrop={this.dragDrop}>
 				{gemColour && (
 					<div className={s.container}>
-						<GemStone 
+						<GemStone
+							placed={placed} 
 							colour={gemColour} 
 							removeGem={this.setColour.bind(true, null)}
 						/>

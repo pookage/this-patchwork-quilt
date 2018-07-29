@@ -20,7 +20,7 @@
 			border-radius: 100%;
 			border: 0.05em solid rgba(255,255,255,0.1);
 			transition: transform .3s, box-shadow .3s;
-			box-shadow: 0 0 0.01em 0.005em rgba(0,0,0,0.8)
+			box-shadow: 0 0 0.01em 0.005em rgba(0,0,0,0.8);
 		}
 		/*DEFAULT GEM ANIMATION STATE*/
 		.wrapper.resting .gem{
@@ -34,6 +34,9 @@
 		/*DRAGGING EFFECT*/
 		.wrapper.dragging .gem{
 			animation: shake 1s linear both;
+		}
+		.wrapper.placed .gem {
+			animation: slamDown .6s linear both;
 		}
 			/*GEM CUT EFFECT */
 			.gem:after {
@@ -88,5 +91,43 @@
 	}
 	100% {
 		transform: translate(0, 0) scale(1.5);
+	}
+}
+@keyframes slamDown {
+	0% {
+		transform: scale(1.5);
+	}
+	50% {
+		transform: scale(1.55);
+	}
+	60%, 100% {
+		transform: scale(1);
+	}
+	60% {
+		transform: translate(-2.5%, -2.5%);
+	}
+	65% {
+		transform: translate(2.5%, -2.5%);
+	}
+	70% {
+		transform: translate(-2.5%, 2.5%);
+	}
+	75% {
+		transform: translate(2.5%, 2.5%);
+	}
+	80% {
+		transform: translate(-1.25%, -1.25%);
+	}
+	85% {
+		transform: translate(1.25%, -1.25%);
+	}
+	90% {
+		transform: translate(-1.25%, 1.25%);
+	}
+	95% {
+		transform: translate(1.25%, 1.25%);
+	}
+	100% {
+		transform: translate(0, 0) scale(1);
 	}
 }

@@ -12,6 +12,7 @@ export default class GemStone extends Component {
 		this.drag = this.drag.bind(this);
 		this.move = this.move.bind(this);
 		this.requestMove = this.requestMove.bind(this);
+		this.tryToPop    = this.tryToPop.bind(this);
 
 		this.state = {
 			drag: false
@@ -42,6 +43,11 @@ export default class GemStone extends Component {
 				width, height,
 				left, top
 			};
+
+			this.setState({
+				drag,
+				placed: false
+			});
 			
 		} else {
 
@@ -58,15 +64,22 @@ export default class GemStone extends Component {
 			yDiff = 0;
 
 			if(removeOnDrop) removeGem();
-		}
 
-		this.setState({
-			xDiff, yDiff,
-			drag
-		});		
+			this.setState({
+				xDiff, yDiff,
+				drag,
+				popped: false
+			});		
+		}
 	}//drag
 	requestMove(event){
-		this.moveAnimation = requestAnimationFrame(this.move.bind(true, event));
+		const {
+			popped
+		} = this.state;
+
+		if(popped){
+			this.moveAnimation = requestAnimationFrame(this.move.bind(true, event));
+		}	
 	}//requestMove
 
 	move(event){
@@ -112,6 +125,18 @@ export default class GemStone extends Component {
 			removeOnDrop: false
 		});
 	}
+	tryToPop(event){
+		const {
+			animationName, 
+			target
+		} = event;
+
+		if(animationName.indexOf("shake") > -1 && target == this.$container){
+			this.setState({
+				popped: true
+			});
+		}
+	}
 
 
 	//RENDER METHODS
@@ -119,20 +144,21 @@ export default class GemStone extends Component {
 	render(){
 
 		const {
-			colour = "#ff00ee"
+			colour = "#ff00ee",
+			placed = false
 		} = this.props;
 
 		const {
 			drag         = false,
 			removeOnDrop = false,
-			xDiff = 0,
-			yDiff = 0
+			xDiff        = 0,
+			yDiff        = 0
 		} = this.state;
 
 		return(
 			<div
 				draggable
-				className={`${s.wrapper} ${drag ? s.dragging : s.resting}`}
+				className={`${s.wrapper} ${drag ? s.dragging : s.resting} ${!drag && placed ? s.placed : ""}`}
 				onDragStart={this.setupDragData}
 				onDragLeave={this.leftHome}
 				onDragEnter={this.returnHome}
@@ -145,7 +171,8 @@ export default class GemStone extends Component {
 					<div
 						ref={(ref) => this.$container = ref}
 						className={`${s.gem}`}
-						style={{ backgroundColor: colour }}>
+						style={{ backgroundColor: colour }}
+						onAnimationEnd={this.tryToPop}>
 						<div ref={ref => this.$empty = ref} />
 					</div>
 				</div>
