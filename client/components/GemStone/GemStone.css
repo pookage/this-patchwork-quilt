@@ -28,7 +28,8 @@
 			transform: scale(1);
 		}
 		/*HOVER EFFECT*/
-		.wrapper:hover .gem {
+		.wrapper:hover .gem,
+		.wrapper.glow .gem {
 			animation: glow .6s linear alternate infinite both;
 		}
 		/*DRAGGING EFFECT*/

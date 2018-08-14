@@ -1,70 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1000px"
-	 height="1000px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
-<g id="Shape_1_1_" enable-background="new    ">
-	<g id="Shape_1" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#0D0D0D" d="M853.554,146.446C763.071,55.964,638.071,0,500,0v500
-				L853.554,146.446z"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_1_" enable-background="new    ">
-	<g id="Shape_1_copy" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#303030" d="M500,500h500c0-138.071-55.965-263.071-146.446-353.554L500,500
-				z"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_2_1_" enable-background="new    ">
-	<g id="Shape_1_copy_2" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#4A4A4A" d="M853.48,853.625C944.006,763.138,1000,638.108,1000,500H500
-				L853.48,853.625z"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_3_1_" enable-background="new    ">
-	<g id="Shape_1_copy_3" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#1E1E1E" d="M500,500v500c138.034,0,263.004-55.935,353.48-146.375L500,500z
-				"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_4_1_" enable-background="new    ">
-	<g id="Shape_1_copy_4" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#0D0D0D" d="M144.386,851.469C235.027,943.172,360.875,1000,500,1000V496
-				L144.386,851.469z"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_5_1_" enable-background="new    ">
-	<g id="Shape_1_copy_5" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#303030" d="M500,496H0.025C0.015,497.333,0,498.665,0,500
-				c0,137.017,55.119,261.155,144.386,351.469L500,496z"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_6_1_" enable-background="new    ">
-	<g id="Shape_1_copy_6" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#4A4A4A" d="M500,496L148.458,144.458
-				C57.678,234.224,1.104,358.501,0.025,496H500z"/>
-		</g>
-	</g>
-</g>
-<g id="Shape_1_copy_7_1_" enable-background="new    ">
-	<g id="Shape_1_copy_7" opacity="0.4">
-		<g>
-			<path fill-rule="evenodd" clip-rule="evenodd" fill="#1E1E1E" d="M500,496V0C362.946,0,238.778,55.149,148.458,144.458L500,496z"
-				/>
-		</g>
-	</g>
-</g>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000">
+	<path fill="#0D0D0D" d="M853.554,146.446C763.071,55.964,638.071,0,500,0v500L853.554,146.446z"/>
+	<path fill="#303030" d="M500,500h500c0-138.071-55.965-263.071-146.446-353.554L500,500z"/>
+	<path fill="#4A4A4A" d="M853.48,853.625C944.006,763.138,1000,638.108,1000,500H500L853.48,853.625z"/>
+	<path fill="#1E1E1E" d="M500,500v500c138.034,0,263.004-55.935,353.48-146.375L500,500z"/>
+	<path fill="#0D0D0D" d="M144.386,851.469C235.027,943.172,360.875,1000,500,1000V496L144.386,851.469z"/>
+	<path fill="#303030" d="M500,496H0.025C0.015,497.333,0,498.665,0,500c0,137.017,55.119,261.155,144.386,351.469L500,496z"/>
+	<path fill="#4A4A4A" d="M500,496L148.458,144.458C57.678,234.224,1.104,358.501,0.025,496H500z"/>
+	<path fill="#1E1E1E" d="M500,496V0C362.946,0,238.778,55.149,148.458,144.458L500,496z"/>
 </svg>
