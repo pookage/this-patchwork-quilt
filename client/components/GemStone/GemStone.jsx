@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { AudioManagerContext } from "Components/AudioManager/AudioManagerContext.js";
 import { GemSocketContext } from "Components/GemSocket/GemSocketContext.js";
 import s from "Components/GemStone/GemStone.css";
 
@@ -24,6 +25,21 @@ export default class GemStone extends Component {
 			yDiff: 0,
 		};
 	}//constructor
+	componentDidUpdate(prevProps, prevState){
+		const {
+			popped: prevPopped
+		} = prevState;
+		const {
+			popped: currentPopped
+		} = this.state;
+
+		if(prevPopped != currentPopped){
+			if(currentPopped){
+				this.playSound("pop_short");
+			}
+		}
+
+	}//componentDidUpdate
 	componentWillUnmount(){
 		//remove all listeners and animation frames
 		window.removeEventListener("drag", this.requestMove);
@@ -162,39 +178,52 @@ export default class GemStone extends Component {
 		} = this.state;
 
 		return(
-			<GemSocketContext.Consumer>
-				{SOCKET => {
 
+			<AudioManagerContext.Consumer>
+				{AUDIO => {
 					const {
-						placed,   // (boolean) whether or not this is gem has been recently placed / newly created
-						removeGem // (function) callback to fire if the gem has been dragged out of its socket
-					} = SOCKET;
+						playSound
+					} = AUDIO;
 
+					//make the playSound function available outside of the render function
+					this.playSound = playSound;
 					return(
-						<div
-							draggable
-							ref={ref => this.$wrapper = ref}
-							className={`${s.wrapper} ${dragging ? s.dragging : s.resting} ${!dragging && placed ? s.placed : ""}`}
-							onDragStart={this.setupDragData}
-							onDragLeave={this.leftHome}
-							onDragEnter={this.returnHome}
-							onMouseDown={this.startDrag}
-							onDragEnd={this.endDrag.bind(true, removeGem)}>
-							<div 
-								className={s.container} 
-								style={{ transform: `translate(${xDiff}px, ${yDiff}px)` }}>
-								<div
-									ref={(ref) => this.$container = ref}
-									className={`${s.gem}`}
-									style={{ backgroundColor: colour }}
-									onAnimationEnd={this.tryToPop}>
-									<div ref={ref => this.$empty = ref} />
-								</div>
-							</div>
-						</div>
-					);
+						<GemSocketContext.Consumer>
+							{SOCKET => {
+								const {
+									placed,   // (boolean) whether or not this is gem has been recently placed / newly created
+									removeGem // (function) callback to fire if the gem has been dragged out of its socket
+								} = SOCKET;
+
+								return(
+									<div
+										draggable
+										ref={ref => this.$wrapper = ref}
+										className={`${s.wrapper} ${dragging ? s.dragging : s.resting} ${!dragging && placed ? s.placed : ""}`}
+										onDragStart={this.setupDragData}
+										onDragLeave={this.leftHome}
+										onDragEnter={this.returnHome}
+										onMouseDown={this.startDrag}
+										onDragEnd={this.endDrag.bind(true, removeGem)}>
+										<div 
+											className={s.container} 
+											style={{ transform: `translate(${xDiff}px, ${yDiff}px)` }}>
+											<div
+												ref={(ref) => this.$container = ref}
+												className={`${s.gem}`}
+												style={{ backgroundColor: colour }}
+												onAnimationEnd={this.tryToPop}>
+												<div ref={ref => this.$empty = ref} />
+											</div>
+										</div>
+									</div>
+								);
+							}}
+						</GemSocketContext.Consumer>
+					)
 				}}
-			</GemSocketContext.Consumer>
+			</AudioManagerContext.Consumer>
+			
 		);
 	}//render
 
