@@ -95,7 +95,7 @@ export default class BannerCanvas extends Component {
 		return(
 			<ClanContext.Consumer>
 				{CLAN => {
-
+					
 					const {
 						colours = {} // (Object){ base, highlight, accent }
 					} = CLAN;
@@ -108,8 +108,8 @@ export default class BannerCanvas extends Component {
 							className={`${s.canvas}`}
 							ref={(ref) => this.$canvas = ref} 
 						/>
-					);
-				}};
+					)
+				}}
 			</ClanContext.Consumer>
 		);
 	}//render
