@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { BannerContext } from "Contexts/banner-colours.js";
-import { UIContext } from "Contexts/UI.js";
+import { ClanContext } from "Components/ClanBuilder/ClanContext.js";
 import common from "Utils/common.css";
 import s from "Components/BannerCanvas/BannerCanvas.css";
 
@@ -91,25 +90,27 @@ export default class BannerCanvas extends Component {
 	//RENDER METHODS
 	//---------------------------------
 	render(){
+
+
 		return(
-			<UIContext.Consumer>
-				{UI => (
-					<BannerContext.Consumer>
-						{Banner => {
+			<ClanContext.Consumer>
+				{CLAN => {
 
-							//make the BannerContext.Provider state accessible outside the render function
-							this.colours = Banner.colours;
+					const {
+						colours = {} // (Object){ base, highlight, accent }
+					} = CLAN;
 
-							return(
-								<canvas
-									className={`${s.canvas} ${UI.overlayVisible ? common.blur : ""}`}
-									ref={(ref) => this.$canvas = ref} 
-								/>
-							);
-						}}
-					</BannerContext.Consumer>
-				)}
-			</UIContext.Consumer>
+					//make the clan colours accessible outside of the render function
+					this.colours = colours;
+
+					return(
+						<canvas
+							className={`${s.canvas}`}
+							ref={(ref) => this.$canvas = ref} 
+						/>
+					);
+				}};
+			</ClanContext.Consumer>
 		);
 	}//render
 

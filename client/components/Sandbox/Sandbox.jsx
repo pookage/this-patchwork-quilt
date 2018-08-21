@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import AudioManager from "Components/AudioManager/AudioManager.jsx";
-import GemSocket from "Components/GemSocket/GemSocket.jsx";
-import GemStone from "Components/GemStone/GemStone.jsx";
+// import AudioManager from "Components/AudioManager/AudioManager.jsx";
+// import GemSocket from "Components/GemSocket/GemSocket.jsx";
+// import GemStone from "Components/GemStone/GemStone.jsx";
 import s from "Components/Sandbox/Sandbox.css";
 
 export default class Sandbox extends Component {
 
 	render(){
+		return "";
+		/*
 		return(
 			<AudioManager>
 				<div className={s.wrapper}>
@@ -22,6 +24,7 @@ export default class Sandbox extends Component {
 				</div>
 			</AudioManager>
 		);
+		*/
 	}//render
 
 }

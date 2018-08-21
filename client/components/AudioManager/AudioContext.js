@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
 
-export const AudioManagerContext = React.createContext({
+export const AudioContext = React.createContext({
 	playSound: (name) => {}
 });

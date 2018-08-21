@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AudioManagerContext } from "Components/AudioManager/AudioManagerContext.js";
+import { AudioContext } from "Components/AudioManager/AudioContext.js";
 
 export default class AudioManager extends Component {
 
@@ -97,20 +97,24 @@ export default class AudioManager extends Component {
 	//---------------------------------
 	render(){
 
+		console.log("Render AudioManager")
+
 		const {
 			children = []
 		} = this.props;
 
 		const controls = {
-			playSound: this.play
+			playSound: this.play,
+			pauseSound: this.pause,
+			pauseAllSound: this.pauseAll
 		};
 
 		return(
-			<AudioManagerContext.Provider value={controls}>
+			<AudioContext.Provider value={controls}>
 				<audio src="/client/assets/audio/pop.mp3" key="audio_pop" ref={(ref) => this["pop"] = ref} />
 				<audio src="/client/assets/audio/pop_short.mp3" key="audio_pop_short" ref={(ref) => this["pop_short"] = ref} />
 				{children}
-			</AudioManagerContext.Provider>
+			</AudioContext.Provider>
 		);
 
 	}//render
