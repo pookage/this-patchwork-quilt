@@ -1,0 +1,28 @@
+.wrapper {
+	display: flex;
+	height: 100vh;
+	--gem-size: 8.3333rem;
+}
+	.options {
+		width: calc(3 * var(--gem-size));
+		flex-wrap: wrap;
+		font-size: var(--gem-size);
+	}
+	.container {
+		display: flex;
+		flex: 1 0 auto;
+		justify-content: center;
+		align-items: flex-end;
+		flex-direction: column;
+	}
+		.selection {}
+			.socket {
+				font-size: var(--gem-size);
+				display: inline-block;
+				vertical-align: top;
+			}
+		.banner {
+			margin-right: 0;
+			font-size: 5rem;
+			margin-top: 0.5em;
+		}

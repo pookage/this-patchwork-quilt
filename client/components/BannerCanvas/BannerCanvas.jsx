@@ -74,15 +74,15 @@ export default class BannerCanvas extends Component {
 		context.clip();
 
 		//draw base colour
-		context.fillStyle = `#${base.colour}`;
+		context.fillStyle = base.hexcode;
 		context.fillRect(stripeWidth * 0, 0, stripeWidth, height);
 
 		//draw highlight colour
-		context.fillStyle = `#${highlight.colour}`;
+		context.fillStyle = highlight.hexcode;
 		context.fillRect(stripeWidth * 1, 0, stripeWidth, height)
 
 		//draw accent colour
-		context.fillStyle = `#${accent.colour}`;
+		context.fillStyle = accent.hexcode;
 		context.fillRect(stripeWidth * 2, 0, stripeWidth, height)
 	}//drawColours
 
@@ -91,6 +91,9 @@ export default class BannerCanvas extends Component {
 	//---------------------------------
 	render(){
 
+		const {
+			className = ""
+		} = this.props;
 
 		return(
 			<ClanContext.Consumer>
@@ -105,7 +108,7 @@ export default class BannerCanvas extends Component {
 
 					return(
 						<canvas
-							className={`${s.canvas}`}
+							className={`${s.canvas} ${className}`}
 							ref={(ref) => this.$canvas = ref} 
 						/>
 					)

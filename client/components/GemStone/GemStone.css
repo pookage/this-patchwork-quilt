@@ -56,7 +56,7 @@
 		filter: brightness(1);
 	}
 	to {
-		filter: brightness(1.15);
+		filter: brightness(1.35);
 	}
 }
 @keyframes shake {

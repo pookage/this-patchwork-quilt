@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { colours } from "Data/colours.js";
 import { ClanContext } from "Components/ClanBuilder/ClanContext.js";
 import BannerBuilder from "Components/BannerBuilder/BannerBuilder.jsx";
+import MottoBuilder from "Components/MottoBuilder/MottoBuilder.jsx";
+import s from "Components/ClanBuilder/ClanBuilder.css";
 
 export default class ClanBuilder extends Component {
 
@@ -24,10 +26,12 @@ export default class ClanBuilder extends Component {
 
 	//UTILS
 	//--------------------------------
-	setColour(role, code){
+	setColour(role, hexcode){
 
 		const colourState = { ...this.state.colours };
-		colourState[role] = colours[code];
+		const colourKey   = hexcode ? hexcode.split("#")[1] : "empty";
+		colourState[role] = colours[colourKey];
+
 		this.setState({
 			colours: colourState
 		});
@@ -51,9 +55,12 @@ export default class ClanBuilder extends Component {
 		};
 
 		return(
-			<ClanContext.Provider value={context}>
-				<BannerBuilder />
-			</ClanContext.Provider>
+			<div className={s.wrapper}>
+				<ClanContext.Provider value={context}>
+					<BannerBuilder className={s.banner} />
+					<MottoBuilder className={s.motto}/>
+				</ClanContext.Provider>
+			</div>
 		);
 	}//render
 

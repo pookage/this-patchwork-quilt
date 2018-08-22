@@ -13,7 +13,9 @@ export default class App extends Component {
 
 		return (
         	<UIManager>
-        		<ClanBuilder />
+        		<AudioManager>
+        			<ClanBuilder />
+        		</AudioManager>
         	</UIManager>
 		);
 	}//render

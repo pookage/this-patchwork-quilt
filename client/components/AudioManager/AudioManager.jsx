@@ -96,9 +96,6 @@ export default class AudioManager extends Component {
 	//RENDER METHODS
 	//---------------------------------
 	render(){
-
-		console.log("Render AudioManager")
-
 		const {
 			children = []
 		} = this.props;

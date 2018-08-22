@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AudioManagerContext } from "Components/AudioManager/AudioManagerContext.js";
+import { AudioContext } from "Components/AudioManager/AudioContext.js";
 import { GemSocketContext } from "Components/GemSocket/GemSocketContext.js";
 import s from "Components/GemStone/GemStone.css";
 
@@ -64,25 +64,31 @@ export default class GemStone extends Component {
 		if(removeOnDrop) removeGem();
 	}//endDrag
 	startDrag(event){
-
-		//try to update the gem's position whenever the cursor is moved
-		window.addEventListener("drag", this.requestMove);
-
-		//get the gem's dimensions and position at the start of the drag...
+		
 		const {
-			width, height,
-			left, top
-		} = this.$container.getBoundingClientRect();
-		//...and then store them in a class variable to access outside of it
-		this.dragOrigin = {
-			width, height,
-			left, top
-		};
+			buttons // (number) the button that was pressed to trigger the event
+		} = event;
 
-		//fire the shake animation and let the component know that we're dragging now
-		this.setState({
-			dragging: true
-		});
+		if(buttons == 1){
+			//try to update the gem's position whenever the cursor is moved
+			window.addEventListener("drag", this.requestMove);
+
+			//get the gem's dimensions and position at the start of the drag...
+			const {
+				width, height,
+				left, top
+			} = this.$container.getBoundingClientRect();
+			//...and then store them in a class variable to access outside of it
+			this.dragOrigin = {
+				width, height,
+				left, top
+			};
+
+			//fire the shake animation and let the component know that we're dragging now
+			this.setState({
+				dragging: true
+			});
+		}
 	}//startDrag
 	requestMove(event){
 		const {
@@ -179,7 +185,7 @@ export default class GemStone extends Component {
 
 		return(
 
-			<AudioManagerContext.Consumer>
+			<AudioContext.Consumer>
 				{AUDIO => {
 					const {
 						playSound
@@ -222,7 +228,7 @@ export default class GemStone extends Component {
 						</GemSocketContext.Consumer>
 					)
 				}}
-			</AudioManagerContext.Consumer>
+			</AudioContext.Consumer>
 			
 		);
 	}//render
