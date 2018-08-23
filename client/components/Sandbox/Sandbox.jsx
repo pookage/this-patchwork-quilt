@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Envelope from "Components/Envelope/Envelope.jsx";
 import s from "Components/Sandbox/Sandbox.css";
 
 export default class Sandbox extends Component {
@@ -6,8 +7,10 @@ export default class Sandbox extends Component {
 	render(){
 		
 		return(
-			<div>
-				Welcome to the sandbox
+			<div className={s.wrapper}>
+				<div>
+					<Envelope />
+				</div>
 			</div>
 		);
 		

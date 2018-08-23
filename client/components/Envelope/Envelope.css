@@ -1,0 +1,58 @@
+.wrapper {
+	position: relative;
+	font-size: 20vh;
+	--envelope-height: 1em;
+	--envelope-width: 1.618em;
+	height: var(--envelope-height);
+	width: var(--envelope-width);
+	background-color: grey;
+}
+	.fold {
+		position: absolute;
+		
+	}
+		.shape {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+		}
+			.polygon {
+				fill: #F49E42;	
+			}
+	.fold.topFlap {
+		top: 0;
+		height: calc(var(--envelope-height) * 0.618);
+		width: var(--envelope-width);
+	}
+		.topFlap .shape {
+			transform: translateY(-100%);
+		}
+	.fold.bottomFlap {
+		bottom: 0;
+		height: calc(var(--envelope-height) / 2);
+		width: var(--envelope-width);
+	}
+		.bottomFlap .shape {
+			transform: translateY(100%);
+		}
+	.fold.sideFlap {
+		top: 0;
+		height: var(--envelope-height);
+		width: calc(var(--envelope-width) / 2);
+	}
+	.fold.sideFlap.left {
+		left: 0;
+	}
+		.sideFlap.left .shape {
+			transform: translateX(-100%);	
+		}
+	.fold.sideFlap.right {
+		right: 0;
+	}
+		.sideFlap.right .shape {
+			transform: translateX(100%);
+		}
+		
+	
