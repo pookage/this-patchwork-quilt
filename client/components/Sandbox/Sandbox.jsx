@@ -9,6 +9,9 @@ export default class Sandbox extends Component {
 		return(
 			<div className={s.wrapper}>
 				<div>
+					<p className={s.cta}>
+						Open me!
+					</p>
 					<Envelope />
 				</div>
 			</div>

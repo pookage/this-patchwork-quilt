@@ -5,3 +5,18 @@
 	justify-content: center;
 	align-items: center;
 }
+	.cta {
+		font-size: 2vh;
+		text-align: center;
+		margin-bottom: 1em;
+		animation: wiggle .1s infinite alternate linear;
+	}
+
+@keyframes wiggle {
+	from {
+		transform: rotate(-5deg);
+	}
+	to {
+		transform: rotate(5deg);
+	}
+}
