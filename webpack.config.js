@@ -1,48 +1,92 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path              = require("path");
+//dependencies
+const path = require("path");
 
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-	template: './client/index.html',
-	filename: 'index.html',
-	inject: 'body'
-})
+//folders
+const src  = path.resolve(__dirname, "src");
+const dist = path.resolve(__dirname, "dist");
+const assets = path.resolve(__dirname, "assets");
 
-module.exports = {
-	entry: './client/index.js',
-	output: {
-		path: './dist',
-		filename: 'index_bundle.js'
-	},
-	module: {
-		loaders: [
-			{ test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-			{ test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
-			{
-				test: /\.css$/,
-				loader: 'style-loader',
-				exclude: /node_modules/
-			}, {
-				test: /\.css$/,
-				loader: 'css-loader',
-				query: {
-					modules: true,
-					localIdentName: '[name]__[local]___[hash:base64:5]'
-				},
-				exclude: /node_modules/
-			}, {
-				test: /\.(png|svg|jpg|gif)$/,
-				loader: "file-loader"
-			}
-		]
-	},
-	plugins: [HtmlWebpackPluginConfig],
-	resolve : {
-		alias: {
-			Components: path.resolve(__dirname, "client/components/"),
-			Utils: path.resolve(__dirname, "client/utils/"),
-			Contexts: path.resolve(__dirname, "client/contexts/"),
-			Assets: path.resolve(__dirname, "client/assets/"),
-			Data: path.resolve(__dirname, "client/data")
-		}
+function buildConfig(env, args){
+
+	console.log(env, args);
+
+	//build any additional options...
+	let additionalOptions;
+	switch(args.mode){
+
+		//...for production...
+		case "production":
+			additionalOptions = {}
+			break;
+
+		//...for development...
+		case "development":
+		default:
+			additionalOptions = {
+				mode: "development",
+				devtool: 'inline-source-map',
+				devServer: {
+					contentBase: "./dist",
+					https: false
+					// compress: true //POOK : enabled gzip - leave unused for now until you better understand how gzip works
+				}
+			};
+			break;
 	}
-}
+
+
+	//build the composite config file
+	return {
+
+		//required config options
+		//-------------------------------
+		entry: `${src}/index.js`,
+		output: {
+			filename: "bundle.js",
+			path: dist
+		},
+		module: {
+			rules: [
+				{
+					test: /\.css$/,
+					use: [
+						{
+							loader: "style-loader"		
+						}, {
+							loader: "css-loader",
+							options: {
+								modules: true,
+								localIdentName: "[name]__[local]"
+							}
+						}
+					]	
+				},
+				{
+					test: /\.(png|svg|jpg)$/,
+					use: [
+						{
+							loader: "file-loader",
+							options: {
+								name: "[path][name].[ext]"
+							}
+						}
+					]
+				}
+			]
+		},
+		resolve: {
+			alias: {
+				Assets: assets,
+				Components: `${src}/components`
+			}
+		},
+
+		//optional config options
+		//-------------------------------
+		...additionalOptions
+	}	
+}//buildConfig
+
+
+//configuration
+module.exports = buildConfig;
