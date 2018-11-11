@@ -20,8 +20,7 @@ export default class Explore extends Component {
 		//setup any non-context scoped variables
 		this.options = {
 			geolocation: {
-				enableHighAccuracy: true,
-				timeout: 5000
+				enableHighAccuracy: true
 			}
 		};
 
@@ -65,20 +64,20 @@ export default class Explore extends Component {
 			.then(this.informServer)
 			.catch(this.UI.reportError);
 	}//handleAction
-	async saveLocation(event){
+	saveLocation(event){
 		const {
 			latitude,
 			longitude
 		} = this.state;
 
-		const response = await storeNewLocation(latitude, longitude);
-
-		console.log(response);
-		
-		this.setState({
-			latitude: "",
-			longitude: ""
+		const response = storeNewLocation(latitude, longitude).then((response) => {
+			console.log(response);
+			this.setState({
+				latitude: "",
+				longitude: ""
+			});
 		});
+		
 		
 	}//saveLocation
 

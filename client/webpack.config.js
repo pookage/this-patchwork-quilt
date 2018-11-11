@@ -52,7 +52,8 @@ function buildConfig(env, args){
 
 		//required config options
 		//-------------------------------
-		entry: ["@babel/polyfill", `${src}/index.js`],
+		// entry: ["@babel/polyfill", `${src}/index.js`], //used for async/await but increases bundle size by 80kb
+		entry: `${src}/index.js`,
 		output: {
 			filename: "bundle.js",
 			path: dist
