@@ -1,10 +1,14 @@
 //dependencies
-const path = require("path");
+const path                    = require("path");
+const HtmlWebpackPlugin       = require('html-webpack-plugin');
+const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
 //folders
-const src  = path.resolve(__dirname, "src");
-const dist = path.resolve(__dirname, "dist");
+const src    = path.resolve(__dirname, "src");
+const dist   = path.resolve(__dirname, "dist");
 const assets = path.resolve(__dirname, "assets");
+
+//plugins
 
 function buildConfig(env, args){
 
@@ -16,7 +20,12 @@ function buildConfig(env, args){
 
 		//...for production...
 		case "production":
-			additionalOptions = {}
+			additionalOptions = {
+				plugins: [
+					new HtmlWebpackPlugin(),
+					new DynamicCdnWebpackPlugin()
+				]
+			}
 			break;
 
 		//...for development...
