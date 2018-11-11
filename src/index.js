@@ -1,18 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import App from "Components/App/App.jsx";
 
+window.addEventListener("DOMContentLoaded", init);
 
-class ExampleComponent extends React.Component {
-
-  render() {
-
-    return React.createElement(
-      'h1',{}, 'Like'
-    );
-  }
+function init(){
+	ReactDOM.render(
+		<App />,
+		document.getElementById("app")
+	);
 }
-
-ReactDOM.render(
-	React.createElement(ExampleComponent),
-	document.getElementById("app")
-);

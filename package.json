@@ -18,7 +18,15 @@
     "url": "https://github.com/pookage/this-patchwork-quilt/issues"
   },
   "homepage": "https://github.com/pookage/this-patchwork-quilt#readme",
+  "babel": {
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+  },
   "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "babel-loader": "^8.0.4",
     "babel-runtime": "^6.26.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.1",

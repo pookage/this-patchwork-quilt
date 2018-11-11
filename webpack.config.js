@@ -8,8 +8,6 @@ const src    = path.resolve(__dirname, "src");
 const dist   = path.resolve(__dirname, "dist");
 const assets = path.resolve(__dirname, "assets");
 
-//plugins
-
 function buildConfig(env, args){
 
 	console.log(env, args);
@@ -22,7 +20,13 @@ function buildConfig(env, args){
 		case "production":
 			additionalOptions = {
 				plugins: [
-					new HtmlWebpackPlugin(),
+					new HtmlWebpackPlugin({
+						template: `${src}/index.html`,
+						minify: {
+							removeComments: true,
+							collapseWhitespace: true
+						}
+					}),
 					new DynamicCdnWebpackPlugin()
 				]
 			}
@@ -37,7 +41,6 @@ function buildConfig(env, args){
 				devServer: {
 					contentBase: "./dist",
 					https: false
-					// compress: true //POOK : enabled gzip - leave unused for now until you better understand how gzip works
 				}
 			};
 			break;
@@ -56,6 +59,11 @@ function buildConfig(env, args){
 		},
 		module: {
 			rules: [
+				{
+					test: /\.(js|jsx)$/,
+					exclude: /node_modules/,
+					use: [ "babel-loader" ]
+				},
 				{
 					test: /\.css$/,
 					use: [
