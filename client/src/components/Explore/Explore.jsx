@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { UIContext } from "Components/UI/UIContext.js";
+import { storeNewLocation } from "Utils/server.js";
 import s from "Components/Explore/Explore.css";
 
 export default class Explore extends Component {
@@ -11,6 +12,7 @@ export default class Explore extends Component {
 		this.handleAction       = this.handleAction.bind(this);
 		this.updateUserLocation = this.updateUserLocation.bind(this);
 		this.getUserLocation    = this.getUserLocation.bind(this);
+		this.saveLocation       = this.saveLocation.bind(this);
 
 		//create namespaces for each context we'll be using functions from
 		this.UI = {};
@@ -60,8 +62,25 @@ export default class Explore extends Component {
 
 		new Promise(this.getUserLocation)
 			.then(this.updateUserLocation)
+			.then(this.informServer)
 			.catch(this.UI.reportError);
 	}//handleAction
+	async saveLocation(event){
+		const {
+			latitude,
+			longitude
+		} = this.state;
+
+		const response = await storeNewLocation(latitude, longitude);
+
+		console.log(response);
+		
+		this.setState({
+			latitude: "",
+			longitude: ""
+		});
+		
+	}//saveLocation
 
 
 	//RENDER FUNCTIONS
@@ -72,6 +91,8 @@ export default class Explore extends Component {
 			latitude,
 			longitude
 		} = this.state;
+
+		const haveLocation = latitude && longitude;
 
 		return[
 			<UIContext.Consumer key="explore__ui_consumer">
@@ -84,7 +105,12 @@ export default class Explore extends Component {
 					type="submit"
 					value="Get Location"
 				/>
-				{latitude && longitude && (
+				<button 
+					onClick={this.saveLocation}
+					disabled={!haveLocation}>
+					Save
+				</button>
+				{haveLocation && (
 					<output className={s.location}>
 						{latitude}, {longitude}
 					</output>

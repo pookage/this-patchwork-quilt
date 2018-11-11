@@ -52,7 +52,7 @@ function buildConfig(env, args){
 
 		//required config options
 		//-------------------------------
-		entry: `${src}/index.js`,
+		entry: ["@babel/polyfill", `${src}/index.js`],
 		output: {
 			filename: "bundle.js",
 			path: dist
@@ -94,7 +94,8 @@ function buildConfig(env, args){
 		resolve: {
 			alias: {
 				Assets: assets,
-				Components: `${src}/components`
+				Components: `${src}/components`,
+				Utils: `${src}/utils`
 			}
 		},
 
