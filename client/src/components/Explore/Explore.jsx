@@ -40,11 +40,11 @@ export default class Explore extends Component {
 			this.options.geolocation
 		);
 	}//getUserLocation
-	updateUserLocation(coordinates){
+	updateUserLocation(location){
 		const {
 			latitude,
 			longitude
-		} = coordinates;
+		} = location;
 
 		this.setState({
 			latitude,
@@ -78,7 +78,7 @@ export default class Explore extends Component {
 				{UI => { this.UI.reportError = UI.reportError }}
 			</UIContext.Consumer>,
 
-			
+
 			<form onSubmit={this.handleAction} key="explore__content">
 				<input 
 					type="submit"
