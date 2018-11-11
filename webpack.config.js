@@ -40,7 +40,7 @@ function buildConfig(env, args){
 				devtool: 'inline-source-map',
 				devServer: {
 					contentBase: "./dist",
-					https: false
+					https: true
 				}
 			};
 			break;
