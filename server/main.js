@@ -21,7 +21,6 @@ app.post("/locations/new/", saveNewLocation);
 
 function configureHeaders(request, response, next){
 	response.setHeader("Access-Control-Allow-Origin", "https://localhost:8080");
-	// response.setHeader("Access-Control-Allow-Origin", "GET, POST");
 	response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
 }//configureHeaders
