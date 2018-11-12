@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UIManager from "Components/UI/UIManager.jsx";
-import Game from "Components/Game/Game.jsx";
+import GameManager from "Components/Game/GameManager.jsx";
 
 export default class App extends Component {
 
@@ -10,7 +10,7 @@ export default class App extends Component {
 
 		return(
 			<UIManager>
-				<Game />
+				<GameManager />
 			</UIManager>
 		);
 	}//render

@@ -11,7 +11,8 @@ function storeNewLocation(lat, lng){
 		method: 'POST',
 		body: JSON.stringify({ lat, lng })
 	}).then(response => response.json())
-	.then((response) => response);
+	.then(response => response)
+	.catch(error => throw error);
 }//storeNewLocation
 
 export {

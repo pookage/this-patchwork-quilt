@@ -63,7 +63,18 @@ function buildConfig(env, args){
 				{
 					test: /\.(js|jsx)$/,
 					exclude: /node_modules/,
-					use: [ "babel-loader" ]
+					use: {
+						loader: "babel-loader",
+						options: {
+							presets: [
+								"@babel/preset-env",
+								"@babel/preset-react"
+							],
+							plugins: [
+								"@babel/plugin-proposal-throw-expressions"
+							]
+						}
+					},
 				},
 				{
 					test: /\.css$/,
@@ -96,6 +107,7 @@ function buildConfig(env, args){
 			alias: {
 				Assets: assets,
 				Components: `${src}/components`,
+				Modes: `${src}/components/modes`,
 				Utils: `${src}/utils`
 			}
 		},

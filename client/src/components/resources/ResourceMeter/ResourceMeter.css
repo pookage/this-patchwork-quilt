@@ -1,0 +1,14 @@
+.wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+	.label {
+		width: 5em;
+		text-transform: capitalize;
+	}
+	.meter {
+		flex: 1 0 auto;
+	}
+		.meter.exhaustion {}
+		.meter.followers {}
+		.meter.supplies {}

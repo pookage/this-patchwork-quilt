@@ -33,6 +33,10 @@ function saveNewLocation(request, response){
 
 	console.log(lat, lng)
 	response.send({
-		message: "aye"
-	})
+		code: 201,
+		message: "New location saved",
+		options: {
+			lat, lng
+		}
+	});
 }//test
