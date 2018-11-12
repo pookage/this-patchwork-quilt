@@ -15,8 +15,7 @@ export default class ResourceMeter extends Component {
 		} = this.props;
 
 		const id   = `resources__meter__${name}`;
-		const low  = max * 0.1;
-		const high = max * 0.5;
+		const low  = max * 0.2;
 
 		return(
 			<div className={s.wrapper}>
@@ -29,7 +28,6 @@ export default class ResourceMeter extends Component {
 					className={`${s.meter} ${s[name]}`} 
 					id={id}
 					low={low}
-					high={high}
 					min={min}
 					max={max}
 					value={value} 

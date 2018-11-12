@@ -36,11 +36,24 @@ export default class Camp extends Component {
 	//---------------------------------
 	rest(){
 		const dice                 = Math.random();
-		const threshold_EXHAUSTION = 0.5;
-		const threshold_SUPPLIES   = 0.9;
+		const threshold_MORALE     = 0.85;
+		const threshold_SUPPLIES   = 0.95;
 
-		if(dice > threshold_EXHAUSTION) this.RESOURCES.updateResource("morale", 1);
-		if(dice > threshold_SUPPLIES)   this.RESOURCES.updateResource("supplies", -1);
+		const {
+			charisma, followers,
+			updateResource
+		} = this.RESOURCES;
+
+
+		let increment;
+		if(dice > threshold_MORALE){
+			increment = (charisma / followers);
+			updateResource("morale", increment);
+		}
+		if(dice > threshold_SUPPLIES){
+			increment = 1 * followers;
+			updateResource("supplies", -increment);
+		}
 	}//rest
 
 
@@ -48,13 +61,21 @@ export default class Camp extends Component {
 	//---------------------------------
 	render(){
 		return[
-			<button 
-				key="camp__button__break_camp"
-				onClick={this.breakCamp}>
-				Break Camp
-			</button>,
+			<div key="camp__wrapper">
+				<p>
+					You sit and rest with your followers by the campfire
+				</p>
+				<button 
+					onClick={this.breakCamp}>
+					Break Camp
+				</button>
+			</div>,
 			<ResourceContext.Consumer key="camp__consumer__resource">
-				{RESOURCES => { this.RESOURCES.updateResource = RESOURCES.updateResource; }}
+				{RESOURCES => { 
+					this.RESOURCES.updateResource = RESOURCES.updateResource; 
+					this.RESOURCES.charisma       = RESOURCES.charisma;
+					this.RESOURCES.followers      = RESOURCES.followers;
+				}}
 			</ResourceContext.Consumer>,
 			<GameContext.Consumer key="camp__consumer__game">
 				{GAME => {

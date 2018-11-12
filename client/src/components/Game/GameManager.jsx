@@ -86,7 +86,7 @@ export default class GameManager extends Component {
 	}//setSpeed
 	updateTickInterval(speed){
 		window.clearInterval(this.tick);
-		const tickSpeed = speed * 1000;
+		const tickSpeed = 1000 / speed;
 		window.setInterval(this.performTasks, tickSpeed)
 	}//updateTickInterval
 	performTasks(){
