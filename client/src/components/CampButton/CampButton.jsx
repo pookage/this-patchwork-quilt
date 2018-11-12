@@ -31,6 +31,10 @@ export default class Explore extends Component {
 			.then(this.parseResponse)
 			.catch(this.UI.reportError);
 	}//handleAction
+
+
+	//UTILS
+	//------------------------------------
 	saveLocation(location){
 		const {
 			latitude,
@@ -57,13 +61,13 @@ export default class Explore extends Component {
 		return[
 			<button 
 				onClick={this.handleAction}
-				key="camp_button__camp_button">
+				key="camp_button__button__make_camp">
 				Make Camp
 			</button>,
-			<UIContext.Consumer key="camp_button__ui_consumer">
+			<UIContext.Consumer key="camp_button__consumer__ui">
 				{UI => { this.UI.reportError = UI.reportError }}
 			</UIContext.Consumer>,
-			<GameContext.Consumer key="camp_button__game_consumer">
+			<GameContext.Consumer key="camp_button__consumer__game">
 				{GAME => { this.GAME.setMode = GAME.setMode }}
 			</GameContext.Consumer>
 		];

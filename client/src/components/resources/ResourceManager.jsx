@@ -8,6 +8,8 @@ export default class ResourceManager extends Component {
 	constructor(...args){
 		super(...args);
 
+		console.log( );
+
 		//scope binding
 		this.updateResource = this.updateResource.bind(this);
 		this.setResource    = this.setResource.bind(this);
@@ -15,11 +17,14 @@ export default class ResourceManager extends Component {
 		//local variables for scoping context
 		this.UI = {};
 
+		//grab defaults from the context
+		const {
+			morale, supplies, followers
+		} = ResourceContext._currentValue;
+
 		//initialise the state
 		this.state = {
-			exhaustion: 0,
-			supplies: 50,
-			followers: 5
+			morale, supplies, followers
 		};
 	}//constructor
 
@@ -29,7 +34,7 @@ export default class ResourceManager extends Component {
 	updateResource(key, difference){
 		switch(key){
 			//only allow the following resources to be updated
-			case "exhaustion":
+			case "morale":
 			case "supplies":
 			case "followers":
 				const currentValue = this.state[key];
@@ -38,7 +43,7 @@ export default class ResourceManager extends Component {
 				break;
 
 			default:
-				this.UI.reportError("Attempted to change an invalid resource");
+				this.UI.reportError(`Attempted to change an invalid resource : ${key}`);
 		}
 	}//updateResource
 	setResource(key, value){
@@ -56,13 +61,13 @@ export default class ResourceManager extends Component {
 		} = this.props;
 
 		const {
-			exhaustion,
+			morale,
 			supplies,
 			followers
 		} = this.state;
 
 		const data = {
-			exhaustion,
+			morale,
 			supplies,
 			followers,
 			updateResource: this.updateResource
@@ -73,7 +78,7 @@ export default class ResourceManager extends Component {
 				<legend>
 					Resources
 				</legend>
-				<ResourceMeter name="exhaustion" value={exhaustion} />
+				<ResourceMeter name="morale" value={morale} />
 				<ResourceMeter name="supplies" value={supplies} />
 				<ResourceMeter name="followers" value={followers} />
 			</fieldset>,

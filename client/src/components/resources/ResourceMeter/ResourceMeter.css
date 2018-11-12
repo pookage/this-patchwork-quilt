@@ -9,6 +9,6 @@
 	.meter {
 		flex: 1 0 auto;
 	}
-		.meter.exhaustion {}
+		.meter.morale {}
 		.meter.followers {}
 		.meter.supplies {}

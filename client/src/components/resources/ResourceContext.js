@@ -1,9 +1,9 @@
 import React, { createContext } from "react";
 
 export const ResourceContext = React.createContext({
-	exhaustion: 0,
-	supplies: 0,
-	followers: 0,
+	morale: 50,
+	supplies: 50,
+	followers: 5,
 	updateResource: (key, difference) => {}
 });
 

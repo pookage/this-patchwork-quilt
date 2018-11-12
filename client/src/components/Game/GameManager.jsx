@@ -9,6 +9,7 @@ export default class GameManager extends Component {
 	constructor(...args){
 		super(...args);
 
+		//scope binding
 		this.setMode             = this.setMode.bind(this);
 		this.setSpeed            = this.setSpeed.bind(this);
 		this.addTasksToTick      = this.addTasksToTick.bind(this);
@@ -16,11 +17,17 @@ export default class GameManager extends Component {
 		this.performTasks        = this.performTasks.bind(this);
 		this.updateTickInterval  = this.updateTickInterval.bind(this);
 
+		//non-render-triggering variables
 		this.tick = null;
 
+		//grab default state values from the context
+		const {
+			mode, speed
+		} = GameContext._currentValue;
+
+		//intialise the state
 		this.state = {
-			mode: "EXPLORE",
-			speed: 1,
+			mode, speed,
 			tasks: []
 		};
 	}//constructor
@@ -32,21 +39,18 @@ export default class GameManager extends Component {
 		this.updateTickInterval(speed);
 	}//componentDidMount
 	componentDidUpdate(prevProps, prevState){
-		console.log("componentUpdated")
 		const {
 			speed: prevSpeed
 		} = prevState;
 		const {
-			speed,
-			tasks
+			speed
 		} = this.state;
 
+		//if the speed has changed, then adjust the tick accordingly
 		if(speed != prevSpeed) this.updateTickInterval(speed);
-
-		console.log(tasks)
 	}//componentDidUpdate
 	componentWillUnmount(){
-
+		window.clearInterval(this.tick)
 	}//componentWillUnmount
 
 
@@ -79,9 +83,9 @@ export default class GameManager extends Component {
 		this.setState({ speed });
 	}//setSpeed
 	updateTickInterval(speed){
-		clearInterval(this.tick);
+		window.clearInterval(this.tick);
 		const tickSpeed = speed * 1000;
-		setInterval(this.performTasks, tickSpeed)
+		window.setInterval(this.performTasks, tickSpeed)
 	}//updateTickInterval
 	performTasks(){
 		const {
