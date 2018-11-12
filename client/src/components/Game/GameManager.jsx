@@ -9,26 +9,95 @@ export default class GameManager extends Component {
 	constructor(...args){
 		super(...args);
 
-		this.setMode = this.setMode.bind(this);
+		this.setMode             = this.setMode.bind(this);
+		this.setSpeed            = this.setSpeed.bind(this);
+		this.addTasksToTick      = this.addTasksToTick.bind(this);
+		this.removeTasksFromTick = this.removeTasksFromTick.bind(this);
+		this.performTasks        = this.performTasks.bind(this);
+		this.updateTickInterval  = this.updateTickInterval.bind(this);
+
+		this.tick = null;
 
 		this.state = {
-			mode: "EXPLORE"
+			mode: "EXPLORE",
+			speed: 1,
+			tasks: []
 		};
 	}//constructor
+	componentDidMount(){
+		const {
+			speed
+		} = this.state;
+
+		this.updateTickInterval(speed);
+	}//componentDidMount
+	componentDidUpdate(prevProps, prevState){
+		console.log("componentUpdated")
+		const {
+			speed: prevSpeed
+		} = prevState;
+		const {
+			speed,
+			tasks
+		} = this.state;
+
+		if(speed != prevSpeed) this.updateTickInterval(speed);
+
+		console.log(tasks)
+	}//componentDidUpdate
+	componentWillUnmount(){
+
+	}//componentWillUnmount
 
 
 	//UTILS
 	//-------------------------
+	addTasksToTick(newTasks){
+		const {
+			tasks
+		} = this.state;
+
+		//add each task to the tick
+		tasks.push(...newTasks);
+	}//addTasksToTick
+	removeTasksFromTick(finishedTasks){
+		const {
+			tasks
+		} = this.state;
+
+		//find the index of, and remove, each given task from the tick
+		let task, taskIndex;
+		for(task of finishedTasks){
+			taskIndex = tasks.indexOf(task);
+			if(taskIndex > -1) tasks.splice(taskIndex, 1);
+		}
+	}//removeTasksFromTick
 	setMode(mode){
 		this.setState({ mode });
 	}//setMode
+	setSpeed(speed){
+		this.setState({ speed });
+	}//setSpeed
+	updateTickInterval(speed){
+		clearInterval(this.tick);
+		const tickSpeed = speed * 1000;
+		setInterval(this.performTasks, tickSpeed)
+	}//updateTickInterval
+	performTasks(){
+		const {
+			tasks
+		} = this.state;
+
+		for(let task of tasks) task();
+	}//performTasks
 
 
 	//RENDER FUNCTIONS
 	//-------------------------
 	render(){
 		const {
-			mode
+			mode,
+			speed
 		} = this.state;
 
 
@@ -46,7 +115,11 @@ export default class GameManager extends Component {
 
 		const data = {
 			mode,
-			setMode: this.setMode
+			speed,
+			setMode:             this.setMode,
+			setSpeed:            this.setSpeed,
+			addTasksToTick:      this.addTasksToTick,
+			removeTasksFromTick: this.removeTasksFromTick
 		};
 
 		return(

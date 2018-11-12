@@ -40,7 +40,6 @@ export default class Explore extends Component {
 		return storeNewLocation(latitude, longitude);
 	}//saveLocation
 	parseResponse(response){
-		console.log(response)
 		switch(response.code){
 			case 201:
 				this.GAME.setMode("CAMP");
@@ -56,17 +55,17 @@ export default class Explore extends Component {
 	render(){
 
 		return[
+			<button 
+				onClick={this.handleAction}
+				key="camp_button__camp_button">
+				Make Camp
+			</button>,
 			<UIContext.Consumer key="camp_button__ui_consumer">
 				{UI => { this.UI.reportError = UI.reportError }}
 			</UIContext.Consumer>,
 			<GameContext.Consumer key="camp_button__game_consumer">
 				{GAME => { this.GAME.setMode = GAME.setMode }}
-			</GameContext.Consumer>,
-			<button 
-				onClick={this.handleAction}
-				key="camp_button__camp_button">
-				Make Camp
-			</button>
+			</GameContext.Consumer>
 		];
 	}//render
 }
