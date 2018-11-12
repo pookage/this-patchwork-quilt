@@ -4,7 +4,7 @@ import { GameContext } from "Components/Game/GameContext.js";
 import { getUserLocation } from "Utils/geolocation.js";
 import { storeNewLocation } from "Utils/server.js";
 
-export default class Explore extends Component {
+export default class MarkLocationButton extends Component {
 
 	constructor(...args){
 		super(...args);
@@ -16,7 +16,6 @@ export default class Explore extends Component {
 
 		//create namespaces for each context we'll be using functions from
 		this.UI   = {};
-		this.GAME = {};
 	}//constructor
 
 
@@ -44,9 +43,14 @@ export default class Explore extends Component {
 		return storeNewLocation(latitude, longitude);
 	}//saveLocation
 	parseResponse(response){
+
+		const {
+			onClick = () => {}
+		} = this.props;
+
 		switch(response.code){
 			case 201:
-				this.GAME.setMode("CAMP");
+				onClick();
 				break;
 			default:
 				throw response.message;
@@ -58,18 +62,22 @@ export default class Explore extends Component {
 	//--------------------------------
 	render(){
 
+		const {
+			children: label,
+			onClick,
+			...attributes
+		} = this.props;
+
 		return[
 			<button 
 				onClick={this.handleAction}
-				key="camp_button__button__make_camp">
-				Make Camp
+				key="camp_button__button__make_camp"
+				{...attributes}>
+				{label}
 			</button>,
 			<UIContext.Consumer key="camp_button__consumer__ui">
 				{UI => { this.UI.reportError = UI.reportError }}
 			</UIContext.Consumer>,
-			<GameContext.Consumer key="camp_button__consumer__game">
-				{GAME => { this.GAME.setMode = GAME.setMode }}
-			</GameContext.Consumer>
 		];
 	}//render
 }

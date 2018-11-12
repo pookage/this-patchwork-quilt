@@ -22,12 +22,12 @@ export default class GameManager extends Component {
 
 		//grab default state values from the context
 		const {
-			mode, speed
+			mode, speed, debug
 		} = GameContext._currentValue;
 
 		//intialise the state
 		this.state = {
-			mode, speed,
+			mode, speed, debug,
 			tasks: []
 		};
 	}//constructor
@@ -37,6 +37,8 @@ export default class GameManager extends Component {
 		} = this.state;
 
 		this.updateTickInterval(speed);
+
+		window.debug = this.toggleDebug;
 	}//componentDidMount
 	componentDidUpdate(prevProps, prevState){
 		const {
@@ -94,16 +96,19 @@ export default class GameManager extends Component {
 
 		for(let task of tasks) task();
 	}//performTasks
+	toggleDebug(){
+		this.setState({
+			debug: !this.state.debug
+		});
+	}//toggleDebug
 
 
 	//RENDER FUNCTIONS
 	//-------------------------
 	render(){
 		const {
-			mode,
-			speed
+			mode, speed, debug
 		} = this.state;
-
 
 
 		let ModeComp;
@@ -118,8 +123,7 @@ export default class GameManager extends Component {
 		}
 
 		const data = {
-			mode,
-			speed,
+			mode, speed, debug,
 			setMode:             this.setMode,
 			setSpeed:            this.setSpeed,
 			addTasksToTick:      this.addTasksToTick,

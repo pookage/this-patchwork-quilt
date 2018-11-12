@@ -7,7 +7,6 @@ export default class App extends Component {
 	//RENDER FUNCTIONS
 	//---------------------------
 	render(){
-
 		return(
 			<UIManager>
 				<GameManager />

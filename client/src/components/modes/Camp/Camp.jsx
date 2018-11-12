@@ -60,6 +60,7 @@ export default class Camp extends Component {
 				{GAME => {
 					this.GAME.addTasksToTick      = GAME.addTasksToTick;
 					this.GAME.removeTasksFromTick = GAME.removeTasksFromTick;
+					this.GAME.setMode             = GAME.setMode;
 				}}
 			</GameContext.Consumer>
 		];

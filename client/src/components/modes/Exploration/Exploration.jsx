@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { GameContext } from "Components/Game/GameContext.js";
 import { ResourceContext } from "Components/resources/ResourceContext.js";
-import CampButton from "Components/CampButton/CampButton.jsx";
+import MarkLocationButton from "Components/MarkLocationButton/MarkLocationButton.jsx";
 import s from "Modes/Exploration/Exploration.css";
 
 export default class Exploration extends Component {
@@ -12,7 +12,8 @@ export default class Exploration extends Component {
 		super(...args);
 
 		//scope binding
-		this.explore = this.explore.bind(this);
+		this.explore  = this.explore.bind(this);
+		this.makeCamp = this.makeCamp.bind(this);
 
 		//contexts to be used 
 		this.GAME      = {};
@@ -26,6 +27,12 @@ export default class Exploration extends Component {
 		this.GAME.removeTasksFromTick([this.explore]);
 	}//componentWillUnmount
 	
+
+	//EVENT HANDLING
+	//--------------------------------
+	makeCamp(){
+		this.GAME.setMode("CAMP");
+	}//makeCamp	
 
 	//UTILS
 	//--------------------------------
@@ -42,7 +49,16 @@ export default class Exploration extends Component {
 	render(){
 
 		return [
-			<CampButton key="exploration__button__camp"/>,
+			<div key="exploration__wrapper">
+				<button>
+					Gather Supplies
+				</button>
+				<MarkLocationButton
+					className={s.test} 
+					onClick={this.makeCamp}>
+					Make Camp
+				</MarkLocationButton>
+			</div>,
 			<ResourceContext.Consumer key="exploration__consumer__resource">
 				{RESOURCES => { this.RESOURCES.updateResource = RESOURCES.updateResource; }}
 			</ResourceContext.Consumer>,
@@ -50,6 +66,7 @@ export default class Exploration extends Component {
 				{GAME => {
 					this.GAME.addTasksToTick      = GAME.addTasksToTick;
 					this.GAME.removeTasksFromTick = GAME.removeTasksFromTick;
+					this.GAME.setMode             = GAME.setMode
 				}}
 			</GameContext.Consumer>
 		];
