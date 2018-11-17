@@ -29,6 +29,7 @@ export default class Exploration extends Component {
 		this.GAME.removeTasksFromTick([this.explore]);
 	}//componentWillUnmount
 	
+	
 
 	//EVENT HANDLING
 	//--------------------------------
@@ -63,17 +64,23 @@ export default class Exploration extends Component {
 		const threshold_MORALE   = 0;
 		const threshold_SUPPLIES = 0.90;
 
+		const {
+			companions, supplies, storage
+		} = this.RESOURCES;
+
 		if(dice > threshold_MORALE) this.RESOURCES.updateResource("morale", -1);
 
-		let follower, roll;
-		for(follower = 0; follower < this.RESOURCES.companions; follower++){
-			roll = Math.random();
-			if(roll > threshold_SUPPLIES){
-				this.RESOURCES.updateResource("supplies", 1);
-				this.UI.addEvent({
-					time: new Date(),
-					text: "A follower has found some supplies"
-				});
+		if(supplies < storage){
+			let follower, roll;
+			for(follower = 0; follower < companions; follower++){
+				roll = Math.random();
+				if(roll > threshold_SUPPLIES){
+					this.RESOURCES.updateResource("supplies", 1);
+					this.UI.addEvent({
+						time: new Date(),
+						text: "A follower has found some supplies"
+					});
+				}
 			}
 		}
 	}//explore
@@ -96,7 +103,9 @@ export default class Exploration extends Component {
 			<ResourceContext.Consumer key="exploration__consumer__resource">
 				{RESOURCES => { 
 					this.RESOURCES.updateResource = RESOURCES.updateResource; 
-					this.RESOURCES.companions      = RESOURCES.companions;
+					this.RESOURCES.companions     = RESOURCES.companions;
+					this.RESOURCES.supplies       = RESOURCES.supplies;
+					this.RESOURCES.storage        = RESOURCES.storage;
 				}}
 			</ResourceContext.Consumer>,
 			<GameContext.Consumer key="exploration__consumer__game">

@@ -33,6 +33,7 @@ export default class ResourceMeter extends Component {
 					value={value} 
 					{...attributes}
 				/>
+				{`${value}/${max}`}
 			</div>
 		);
 	}//render

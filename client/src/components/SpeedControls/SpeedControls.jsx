@@ -55,7 +55,7 @@ export default class SpeedControls extends Component {
 		return (
 			<GameContext.Consumer>
 				{GAME => {
-					this.GAME = GAME; 
+					this.GAME.setSpeed = GAME.setSpeed; 
 					const buttons = this.buttonLabels.map(this.renderButton.bind(true, GAME));
 					return (
 						<fieldset>

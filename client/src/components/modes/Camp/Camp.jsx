@@ -25,6 +25,9 @@ export default class Camp extends Component {
 	componentWillUnmount(){
 		this.GAME.removeTasksFromTick([ this.rest ]);
 	}//componentWillUnmount
+	componentDidUpdate(prevProps, prevState){
+		if(this.RESOURCES.supplies == 0) this.breakCamp();
+	}//componentDidUpdate
 
 
 	//EVENT HANDLING
@@ -46,17 +49,16 @@ export default class Camp extends Component {
 		const threshold_SUPPLIES   = 0.95;
 
 		const {
-			charisma, companions,
-			updateResource
+			charisma, companions
 		} = this.RESOURCES;
 
 
 		let increment, dice;
-		
+
 		dice = Math.random();
 		if(dice > threshold_MORALE){
 			increment = (charisma / companions);
-			updateResource("morale", increment);
+			this.RESOURCES.updateResource("morale", increment);
 			this.UI.addEvent({
 				time: new Date(),
 				text: "Rest has raised spirits throughout the camp."
@@ -66,7 +68,7 @@ export default class Camp extends Component {
 		dice = Math.random();
 		if(dice > threshold_SUPPLIES){
 			increment = 1 * companions;
-			updateResource("supplies", -increment);
+			this.RESOURCES.updateResource("supplies", -increment);
 			this.UI.addEvent({
 				time: new Date(),
 				text: "Everyone sits down to a hearty meal."
@@ -92,7 +94,8 @@ export default class Camp extends Component {
 				{RESOURCES => { 
 					this.RESOURCES.updateResource = RESOURCES.updateResource; 
 					this.RESOURCES.charisma       = RESOURCES.charisma;
-					this.RESOURCES.companions      = RESOURCES.companions;
+					this.RESOURCES.companions     = RESOURCES.companions;
+					this.RESOURCES.supplies       = RESOURCES.supplies;
 				}}
 			</ResourceContext.Consumer>,
 			<GameContext.Consumer key="camp__consumer__game">
