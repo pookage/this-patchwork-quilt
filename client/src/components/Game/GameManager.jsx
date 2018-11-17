@@ -89,11 +89,9 @@ export default class GameManager extends Component {
 		this.setState({ mode });
 	}//setMode
 	setSpeed(speed){
-		console.log("setting speed to : ", this.state.speed, speed);
 		this.setState({ speed });
 	}//setSpeed
 	updateTickInterval(speed){
-		console.log("update tick to ", speed)
 		window.clearInterval(this.tick);
 		if(speed > 0){
 
