@@ -1,0 +1,5 @@
+.button {}
+	.button.inactive {}
+	.button.inactive:hover {
+		cursor: pointer;
+	}

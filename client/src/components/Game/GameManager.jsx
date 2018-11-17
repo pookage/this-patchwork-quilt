@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { GameContext } from "Components/Game/GameContext.js";
 import Exploration from "Modes/Exploration/Exploration.jsx";
 import Camp from "Modes/Camp/Camp.jsx";
+import SpeedControls from "Components/SpeedControls/SpeedControls.jsx";
 import ResourceManager from "Components/resources/ResourceManager.jsx";
 
 export default class GameManager extends Component {
@@ -88,12 +89,17 @@ export default class GameManager extends Component {
 		this.setState({ mode });
 	}//setMode
 	setSpeed(speed){
+		console.log("setting speed to : ", this.state.speed, speed);
 		this.setState({ speed });
 	}//setSpeed
 	updateTickInterval(speed){
+		console.log("update tick to ", speed)
 		window.clearInterval(this.tick);
-		const tickSpeed = 1000 / speed;
-		window.setInterval(this.performTasks, tickSpeed)
+		if(speed > 0){
+
+			const tickSpeed = 1000 / speed;
+			this.tick = window.setInterval(this.performTasks, tickSpeed)
+		}
 	}//updateTickInterval
 	performTasks(){
 		const {
@@ -138,6 +144,7 @@ export default class GameManager extends Component {
 
 		return(
 			<GameContext.Provider value={data}>
+				<SpeedControls />
 				<ResourceManager>
 					{ModeComp}
 				</ResourceManager>
