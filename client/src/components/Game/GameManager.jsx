@@ -33,13 +33,13 @@ export default class GameManager extends Component {
 
 		//grab default state values from the context
 		const {
-			mode, speed, debug,
-			savedGame
+			mode, speed, debug
 		} = GameContext._currentValue;
 
 		//intialise the state
 		this.state = {
-			mode, speed, debug, savedGame,
+			mode, speed, debug,
+			loadedResources,
 			tasks: []
 		};
 	}//constructor
