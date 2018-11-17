@@ -12,9 +12,13 @@ export default class UIManager extends Component {
 		this.reportError = this.reportError.bind(this);
 		this.addEvent    = this.addEvent.bind(this);
 
+		const {
+			errors, events
+		} = UIContext._currentValue;
+
 		this.state = {
-			errors: [],
-			events: []
+			errors,
+			events
 		};
 	}//constructor
 

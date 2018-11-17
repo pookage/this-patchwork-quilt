@@ -17,18 +17,29 @@ export default class GameManager extends Component {
 		this.removeTasksFromTick = this.removeTasksFromTick.bind(this);
 		this.performTasks        = this.performTasks.bind(this);
 		this.updateTickInterval  = this.updateTickInterval.bind(this);
+		this.saveGameToLocal     = this.saveGameToLocal.bind(this);
+		this.loadSavedGame       = this.loadSavedGame.bind(this);
+
+		//local vars for contexts that the game manager will use
+		this.UI = {};
 
 		//non-render-triggering variables
-		this.tick = null;
+		this.tick            = null;
+		this.localStorageKey = "TPQ__SAVEGAME";
+		this.defaultSave    = {
+			speed: 1,
+			loadedResources: {}
+		};
 
 		//grab default state values from the context
 		const {
-			mode, speed, debug
+			mode, speed, debug,
+			savedGame
 		} = GameContext._currentValue;
 
 		//intialise the state
 		this.state = {
-			mode, speed, debug,
+			mode, speed, debug, savedGame,
 			tasks: []
 		};
 	}//constructor
@@ -37,9 +48,12 @@ export default class GameManager extends Component {
 			speed
 		} = this.state;
 
-		this.updateTickInterval(speed);
-
+		//enable a debug toggle on the window
 		window.debug = this.toggleDebug;
+		//grab the savegame from localstorage if it exists
+		this.loadSavedGame();
+		//save the game to the localStorage before the tab closes
+		window.addEventListener("beforeunload", this.saveGameToLocal);
 	}//componentDidMount
 	componentDidUpdate(prevProps, prevState){
 		const {
@@ -53,7 +67,7 @@ export default class GameManager extends Component {
 		if(speed != prevSpeed) this.updateTickInterval(speed);
 	}//componentDidUpdate
 	componentWillUnmount(){
-		window.clearInterval(this.tick)
+		window.clearInterval(this.tick);
 	}//componentWillUnmount
 
 
@@ -111,13 +125,40 @@ export default class GameManager extends Component {
 			debug: !this.state.debug
 		});
 	}//toggleDebug
+	saveGameToLocal(){
+		const {
+			morale, supplies, companions, storage, charisma
+		} = this.$ResourceManager.exportState();
+		const localSave = JSON.stringify({
+			"mode": "CAMP",
+			"resources" : {
+				morale, supplies, companions, storage, charisma
+			}
+		});
+		localStorage.setItem(this.localStorageKey, localSave);
+	}//saveGameToLocal
+	loadSavedGame(){
+		const savedGame = window.localStorage.getItem(this.localStorageKey);
+		if(savedGame) {
+			const {
+				mode,
+				resources
+			} = JSON.parse(savedGame);
+			this.setState({
+				mode,
+				speed: 0, 
+				loadedResources: resources
+			});
+		}
+		else this.setState(this.defaultSave);
+	}//loadSavedGame	
 
 
 	//RENDER FUNCTIONS
 	//-------------------------
 	render(){
 		const {
-			mode, speed, debug
+			mode, speed, debug, loadedResources,
 		} = this.state;
 
 
@@ -143,9 +184,17 @@ export default class GameManager extends Component {
 		return(
 			<GameContext.Provider value={data}>
 				<SpeedControls />
-				<ResourceManager>
-					{ModeComp}
-				</ResourceManager>
+				{loadedResources && (
+					<ResourceManager
+						ref={ref => this.$ResourceManager = ref}
+						morale={loadedResources.morale}
+						supplies={loadedResources.supplies}
+						companions={loadedResources.companions}
+						storage={loadedResources.storage}
+						charisma={loadedResources.charisma}>
+						{ModeComp}
+					</ResourceManager>
+				)}
 			</GameContext.Provider>
 		);
 	}//render

@@ -9,21 +9,28 @@ export default class ResourceManager extends Component {
 	constructor(...args){
 		super(...args);
 
+		const [
+			props
+		] = args;
+
 		//scope binding
 		this.updateResource          = this.updateResource.bind(this);
 		this.setResource             = this.setResource.bind(this);
 		this.lowMoraleRepercussion   = this.lowMoraleRepercussion.bind(this);
 		this.lowSuppliesRepercussion = this.lowSuppliesRepercussion.bind(this);
+		this.exportState             = this.exportState.bind(this);
 
 		//local variables for scoping context
 		this.UI               = {};
 		this.GAME             = {};
 		this.moraleMultiplier = 10;
 
+		console.log("RESOURCE MANAGER : ", args[0]);
+
 		//grab defaults from the context
 		const {
 			morale, supplies, companions, storage, charisma
-		} = ResourceContext._currentValue;
+		} = props || ResourceContext._currentValue;
 
 		//initialise the state
 		this.state = {
@@ -79,7 +86,6 @@ export default class ResourceManager extends Component {
 		} else {
 			window.setResource = null;
 		}
-
 	}//componentDidUpdate
 
 
@@ -159,6 +165,9 @@ export default class ResourceManager extends Component {
 			});
 		}
 	}//lowSupplies
+	exportState(){
+		return this.state;
+	}//exportState
 
 
 	//RENDER FUNCTIONS
