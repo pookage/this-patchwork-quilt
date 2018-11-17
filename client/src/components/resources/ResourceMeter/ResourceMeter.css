@@ -3,12 +3,12 @@
 	justify-content: space-between;
 }
 	.label {
-		width: 5em;
+		width: 6em;
 		text-transform: capitalize;
 	}
 	.meter {
 		flex: 1 0 auto;
 	}
 		.meter.morale {}
-		.meter.followers {}
+		.meter.companions {}
 		.meter.supplies {}

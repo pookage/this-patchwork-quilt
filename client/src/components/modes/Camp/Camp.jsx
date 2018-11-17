@@ -40,18 +40,18 @@ export default class Camp extends Component {
 		const threshold_SUPPLIES   = 0.95;
 
 		const {
-			charisma, followers,
+			charisma, companions,
 			updateResource
 		} = this.RESOURCES;
 
 
 		let increment;
 		if(dice > threshold_MORALE){
-			increment = (charisma / followers);
+			increment = (charisma / companions);
 			updateResource("morale", increment);
 		}
 		if(dice > threshold_SUPPLIES){
-			increment = 1 * followers;
+			increment = 1 * companions;
 			updateResource("supplies", -increment);
 		}
 	}//rest
@@ -63,7 +63,7 @@ export default class Camp extends Component {
 		return[
 			<div key="camp__wrapper">
 				<p>
-					You sit and rest with your followers by the campfire
+					You sit and rest with your companions by the campfire
 				</p>
 				<button 
 					onClick={this.breakCamp}>
@@ -74,7 +74,7 @@ export default class Camp extends Component {
 				{RESOURCES => { 
 					this.RESOURCES.updateResource = RESOURCES.updateResource; 
 					this.RESOURCES.charisma       = RESOURCES.charisma;
-					this.RESOURCES.followers      = RESOURCES.followers;
+					this.RESOURCES.companions      = RESOURCES.companions;
 				}}
 			</ResourceContext.Consumer>,
 			<GameContext.Consumer key="camp__consumer__game">

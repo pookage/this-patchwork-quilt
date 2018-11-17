@@ -18,12 +18,12 @@ export default class ResourceManager extends Component {
 
 		//grab defaults from the context
 		const {
-			morale, supplies, followers, storage, charisma
+			morale, supplies, companions, storage, charisma
 		} = ResourceContext._currentValue;
 
 		//initialise the state
 		this.state = {
-			morale, supplies, followers, storage, charisma
+			morale, supplies, companions, storage, charisma
 		};
 	}//constructor
 
@@ -37,7 +37,7 @@ export default class ResourceManager extends Component {
 				//only allow the following resources to be updated
 				case "morale":
 				case "supplies":
-				case "followers":
+				case "companions":
 
 					//only update if the new value isn't negative...
 					const currentValue = this.state[key];
@@ -45,7 +45,7 @@ export default class ResourceManager extends Component {
 					if(newValue >= 0){
 
 						const {
-							storage, charisma, followers
+							storage, charisma, companions
 						} = this.state;
 
 						let cap;
@@ -54,9 +54,9 @@ export default class ResourceManager extends Component {
 								cap = storage;
 								break;
 							case "morale":
-								cap = followers * charisma;
+								cap = companions * charisma;
 								break;
-							case "followers":
+							case "companions":
 								cap = charisma;
 								break;
 						}
@@ -90,17 +90,17 @@ export default class ResourceManager extends Component {
 		} = this.props;
 
 		const {
-			morale, supplies, followers,
+			morale, supplies, companions,
 			storage, charisma
 		} = this.state;
 
 		const data = {
-			morale, supplies, followers,
+			morale, supplies, companions,
 			charisma,
 			updateResource: this.updateResource
 		};
 
-		const maxMorale = followers * charisma;
+		const maxMorale = companions * charisma;
 		return [
 			<fieldset key="resources__meters">
 				<legend>
@@ -108,7 +108,7 @@ export default class ResourceManager extends Component {
 				</legend>
 				<ResourceMeter name="morale"    value={morale}    max={maxMorale} />
 				<ResourceMeter name="supplies"  value={supplies}  max={storage}   />
-				<ResourceMeter name="followers" value={followers} max={charisma}  />
+				<ResourceMeter name="companions" value={companions} max={charisma}  />
 			</fieldset>,
 			<ResourceContext.Provider value={data} key="resources__provider">
 				{children}

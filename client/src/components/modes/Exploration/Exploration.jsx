@@ -33,10 +33,10 @@ export default class Exploration extends Component {
 	makeCamp(){
 
 		const {
-			followers
+			companions
 		} = this.RESOURCES;
 
-		const foodEaten = 1 * followers;
+		const foodEaten = 1 * companions;
 
 		//set-up camp and have a hearty meal
 		this.GAME.setMode("CAMP");
@@ -46,6 +46,7 @@ export default class Exploration extends Component {
 	//UTILS
 	//--------------------------------
 	explore(){
+
 		const dice               = Math.random();
 		const threshold_MORALE   = 0;
 		const threshold_SUPPLIES = 0.90;
@@ -53,7 +54,7 @@ export default class Exploration extends Component {
 		if(dice > threshold_MORALE) this.RESOURCES.updateResource("morale", -1);
 
 		let follower, roll;
-		for(follower = 0; follower < this.RESOURCES.followers; follower++){
+		for(follower = 0; follower < this.RESOURCES.companions; follower++){
 			roll = Math.random();
 			if(roll > threshold_SUPPLIES) this.RESOURCES.updateResource("supplies", 1);
 		}
@@ -67,7 +68,7 @@ export default class Exploration extends Component {
 		return [
 			<div key="exploration__wrapper">
 				<p>
-					Your followers are gathering supplies
+					Your companions are gathering supplies
 				</p>
 				<MarkLocationButton
 					onClick={this.makeCamp}>
@@ -77,7 +78,7 @@ export default class Exploration extends Component {
 			<ResourceContext.Consumer key="exploration__consumer__resource">
 				{RESOURCES => { 
 					this.RESOURCES.updateResource = RESOURCES.updateResource; 
-					this.RESOURCES.followers      = RESOURCES.followers;
+					this.RESOURCES.companions      = RESOURCES.companions;
 				}}
 			</ResourceContext.Consumer>,
 			<GameContext.Consumer key="exploration__consumer__game">

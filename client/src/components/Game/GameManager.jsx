@@ -59,17 +59,20 @@ export default class GameManager extends Component {
 	//UTILS
 	//-------------------------
 	addTasksToTick(newTasks){
-		const {
-			tasks
-		} = this.state;
-
-		//add each task to the tick
-		tasks.push(...newTasks);
+		this.setState(state => ({
+			tasks: [
+				...state.tasks,
+				...newTasks
+			]
+		}));
 	}//addTasksToTick
 	removeTasksFromTick(finishedTasks){
 		const {
-			tasks
+			tasks: currentTasks
 		} = this.state;
+
+		//create an alias of the current array of tasks
+		let tasks = [ ...currentTasks ];
 
 		//find the index of, and remove, each given task from the tick
 		let task, taskIndex;
@@ -77,6 +80,9 @@ export default class GameManager extends Component {
 			taskIndex = tasks.indexOf(task);
 			if(taskIndex > -1) tasks.splice(taskIndex, 1);
 		}
+
+		//update the state functionally
+		this.setState(state => ({ tasks }));
 	}//removeTasksFromTick
 	setMode(mode){
 		this.setState({ mode });
