@@ -25,8 +25,6 @@ export default class ResourceManager extends Component {
 		this.GAME             = {};
 		this.moraleMultiplier = 10;
 
-		console.log("RESOURCE MANAGER : ", args[0]);
-
 		//grab defaults from the context
 		const {
 			morale, supplies, companions, storage, charisma
