@@ -1,6 +1,9 @@
 import React, { createContext } from "react";
 
 export const UIContext = React.createContext({
-	reportError: () => {}
+	reportError: () => {},
+	addEvent: () => {},
+	errors: [],
+	events: []
 });
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { UIContext } from "Components/UI/UIContext.js";
+import Log from "Components/UI/Log/Log.jsx";
 
 export default class UIManager extends Component {
 
@@ -9,9 +10,11 @@ export default class UIManager extends Component {
 		super(...args);
 
 		this.reportError = this.reportError.bind(this);
+		this.addEvent    = this.addEvent.bind(this);
 
 		this.state = {
-			errors: []
+			errors: [],
+			events: []
 		};
 	}//constructor
 
@@ -32,6 +35,17 @@ export default class UIManager extends Component {
 
 		throw error;
 	}//reportError
+	addEvent(newEvent){
+		this.setState(state => {
+			const recentEvents = state.events.slice(-9);
+			return({
+				events: [
+					...recentEvents,
+					newEvent
+				]
+			});
+		});
+	}//addEvent
 
 
 	//RENDER FUNCTIONS
@@ -50,11 +64,14 @@ export default class UIManager extends Component {
 		} = this.props;
 
 		const {
-			errors: errorData
+			errors: errorData,
+			events,
 		} = this.state;
 
 		const data = {
-			reportError: this.reportError
+			reportError: this.reportError,
+			addEvent: this.addEvent,
+			events
 		};
 
 		const errors    = errorData.map(this.renderError);
@@ -71,6 +88,7 @@ export default class UIManager extends Component {
 				)}
 
 				{children}
+				<Log />
 			</UIContext.Provider>
 		);
 	}//render

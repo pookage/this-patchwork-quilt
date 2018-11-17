@@ -25,8 +25,7 @@ export default class SpeedControls extends Component {
 
 	//EVENT HANDLING
 	//-----------------------------
-	setSpeed(speed, event){
-		event.preventDefault();
+	setSpeed(speed){
 		this.GAME.setSpeed(speed);
 	}//setSpeed
 
@@ -59,9 +58,12 @@ export default class SpeedControls extends Component {
 					this.GAME = GAME; 
 					const buttons = this.buttonLabels.map(this.renderButton.bind(true, GAME));
 					return (
-						<form>
+						<fieldset>
+							<legend>
+								Game Speed
+							</legend>
 							{buttons}
-						</form>
+						</fieldset>
 					);
 				}}
 			</GameContext.Consumer>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { GameContext } from "Components/Game/GameContext.js";
 import { ResourceContext } from "Components/resources/ResourceContext.js";
+import { UIContext } from "Components/UI/UIContext.js";
 
 export default class Camp extends Component {
 
@@ -16,6 +17,7 @@ export default class Camp extends Component {
 		//local storage of contexts
 		this.RESOURCES = {};
 		this.GAME      = {};
+		this.UI        = {};
 	}//constructor
 	componentDidMount(){
 		this.GAME.addTasksToTick([ this.rest ]);
@@ -29,13 +31,17 @@ export default class Camp extends Component {
 	//--------------------------------
 	breakCamp(){
 		this.GAME.setMode("EXPLORATION");
+		this.UI.addEvent({
+			time: new Date(),
+			text: "Time to break camp and head back to the road..."
+		});
 	}//breakCamp
 
 
 	//UTILS
 	//---------------------------------
 	rest(){
-		const dice                 = Math.random();
+		
 		const threshold_MORALE     = 0.85;
 		const threshold_SUPPLIES   = 0.95;
 
@@ -45,14 +51,26 @@ export default class Camp extends Component {
 		} = this.RESOURCES;
 
 
-		let increment;
+		let increment, dice;
+		
+		dice = Math.random();
 		if(dice > threshold_MORALE){
 			increment = (charisma / companions);
 			updateResource("morale", increment);
+			this.UI.addEvent({
+				time: new Date(),
+				text: "Rest has raised spirits throughout the camp."
+			});
 		}
+
+		dice = Math.random();
 		if(dice > threshold_SUPPLIES){
 			increment = 1 * companions;
 			updateResource("supplies", -increment);
+			this.UI.addEvent({
+				time: new Date(),
+				text: "Everyone sits down to a hearty meal."
+			});
 		}
 	}//rest
 
@@ -83,7 +101,12 @@ export default class Camp extends Component {
 					this.GAME.removeTasksFromTick = GAME.removeTasksFromTick;
 					this.GAME.setMode             = GAME.setMode;
 				}}
-			</GameContext.Consumer>
+			</GameContext.Consumer>,
+			<UIContext.Consumer key="exploration__consumer__ui">
+				{UI => {
+					this.UI.addEvent = UI.addEvent;
+				}}
+			</UIContext.Consumer>
 		];
 	}//render
 

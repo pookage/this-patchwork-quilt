@@ -1,0 +1,22 @@
+.wrapper {
+	margin-left: 0;
+}
+	.title {
+		font-size: 1.618em;
+	}
+	.list {
+		padding-left: 0;
+	}
+		.event {
+			list-style-type: none;
+		}
+			.time {
+				display: inline-block;
+				width: 5em;
+			}
+				.time:after {
+					content: "|";
+					display: inline-block;
+					margin: 0 0.618em;
+				}
+			.text {}

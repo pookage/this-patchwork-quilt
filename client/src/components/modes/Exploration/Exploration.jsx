@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { GameContext } from "Components/Game/GameContext.js";
 import { ResourceContext } from "Components/resources/ResourceContext.js";
+import { UIContext } from "Components/UI/UIContext.js";
 import MarkLocationButton from "Components/MarkLocationButton/MarkLocationButton.jsx";
 import s from "Modes/Exploration/Exploration.css";
 
@@ -18,7 +19,8 @@ export default class Exploration extends Component {
 		//contexts to be used 
 		this.GAME      = {};
 		this.RESOURCES = {};
-		
+		this.UI        = {};
+
 	}//constructor
 	componentDidMount(){
 		this.GAME.addTasksToTick([this.explore]);
@@ -38,9 +40,19 @@ export default class Exploration extends Component {
 
 		const foodEaten = 1 * companions;
 
-		//set-up camp and have a hearty meal
+		//set-up camp...
 		this.GAME.setMode("CAMP");
+		this.UI.addEvent({
+			time: new Date(),
+			text: "Let's pause here for some rest..."
+		});
+
+		//...and have a hearty meal
 		this.RESOURCES.updateResource("supplies", -foodEaten);
+		this.UI.addEvent({
+			time: new Date(),
+			text: "Everyone sits down for a hearty meal"
+		});
 	}//makeCamp	
 
 	//UTILS
@@ -56,7 +68,13 @@ export default class Exploration extends Component {
 		let follower, roll;
 		for(follower = 0; follower < this.RESOURCES.companions; follower++){
 			roll = Math.random();
-			if(roll > threshold_SUPPLIES) this.RESOURCES.updateResource("supplies", 1);
+			if(roll > threshold_SUPPLIES){
+				this.RESOURCES.updateResource("supplies", 1);
+				this.UI.addEvent({
+					time: new Date(),
+					text: "A follower has found some supplies"
+				});
+			}
 		}
 	}//explore
 
@@ -87,7 +105,12 @@ export default class Exploration extends Component {
 					this.GAME.removeTasksFromTick = GAME.removeTasksFromTick;
 					this.GAME.setMode             = GAME.setMode
 				}}
-			</GameContext.Consumer>
+			</GameContext.Consumer>,
+			<UIContext.Consumer key="exploration__consumer__ui">
+				{UI => {
+					this.UI.addEvent = UI.addEvent;
+				}}
+			</UIContext.Consumer>
 		];
 	}//render
 }
